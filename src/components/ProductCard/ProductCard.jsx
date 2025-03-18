@@ -1,55 +1,44 @@
-import { Col } from "react-bootstrap";
-import "./product-card.css";
+import React from "react";
+import { Col, Row, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../app/features/cart/cartSlice";
+import "./product-card.css";
 
-const ProductCard = ({ title, productItem }) => {
+const ProductCard = ({ productItem }) => {
   const dispatch = useDispatch();
-  const router = useNavigate();
-  const handelClick = () => {
-    router(`/shop/${productItem.id}`);
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    navigate(`/experts/${id}/agentlist`);
   };
-  const handelAdd = (productItem) => {
-    dispatch(addToCart({ product: productItem, num: 1 }));
-    toast.success("Product has been added to cart!");
-  };
+
   return (
-    <Col md={3} sm={5} xs={10} className="product mtop">
-      {title === "Big Discount" ? (
-        <span className="discount">{productItem.discount}% Off</span>
-      ) : null}
-      <img
-        loading="lazy"
-        onClick={() => handelClick()}
-        src={productItem.imgUrl}
-        alt=""
-      />
-      <div className="product-like">
-        <ion-icon name="heart-outline"></ion-icon>
-      </div>
-      <div className="product-details">
-        <h3 onClick={() => handelClick()}>{productItem.productName}</h3>
-        <div className="rate">
-          <i className="fa fa-star"></i>
-          <i className="fa fa-star"></i>
-          <i className="fa fa-star"></i>
-          <i className="fa fa-star"></i>
-          <i className="fa fa-star"></i>
-        </div>
-        <div className="price">
-          <h4>${productItem.price}</h4>
-          <button
-            aria-label="Add"
-            type="submit"
-            className="add"
-            onClick={() => handelAdd(productItem)}
+    <Col key={productItem.id} lg={3} md={4} sm={6} xs={12}>
+      <Card className="product-card text-center">
+        <Card.Img
+          variant="top"
+          src={productItem.imgUrl}
+          alt={productItem.productName}
+          className="rounded-circle product-image"
+        />
+        <Card.Body>
+          <Card.Title
+            className="product-title"
           >
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </div>
-      </div>
+            {productItem.productName}
+          </Card.Title>
+          <div className="rate">
+            {[...Array(5)].map((_, i) => (
+              <i key={i} className="fa fa-star text-warning"></i>
+            ))}
+          </div>
+          <Button variant="primary" className="mt-2" onClick={() => handleClick(productItem.id)}>
+            View Agent
+          </Button>
+        </Card.Body>
+      </Card>
     </Col>
   );
 };

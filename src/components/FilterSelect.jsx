@@ -1,12 +1,41 @@
 import Select from 'react-select';
-import { products } from '../utils/products';
+import { products, serviceData } from '../utils/products';
+import { useSelector } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { filterCategory } from '../app/features/Categories/categorySlice';
 
 const options = [
-    { value: "sofa", label: "Sofa" },
-    { value: "chair", label: "Chair" },
-    { value: "watch", label: "Watch" },
-    { value: "mobile", label: "Mobile" },
-    { value: "wireless", label: "Wireless" },
+    { value: "free shipping", label: "free shipping" },
+    { value: "secure payment", label: "secure payment" },
+    { value: "Back Guarantee", label: "Back Guarantee" },
+    { value: "Apple Payment", label: "Apple Payment" },
+    { value: "Credit Payment", label: "Credit Payment" },
+    { value: "Card Guarantee", label: "Card Guarantee" },
+    { value: "free shipping", label: "free shipping" },
+    { value: "secure payment", label: "secure payment" },
+    { value: "Back Guarantee", label: "Back Guarantee" },
+    { value: "Apple Payment", label: "Apple Payment" },
+    { value: "Credit Payment", label: "Credit Payment" },
+    { value: "Card Guarantee", label: "Card Guarantee" },
+    { value: "free shipping", label: "free shipping" },
+    { value: "secure payment", label: "secure payment" },
+    { value: "Back Guarantee", label: "Back Guarantee" },
+    { value: "Apple Payment", label: "Apple Payment" },
+    { value: "Credit Payment", label: "Credit Payment" },
+    { value: "Card Guarantee", label: "Card Guarantee" },
+    { value: "free shipping", label: "free shipping" },
+    { value: "secure payment", label: "secure payment" },
+    { value: "Back Guarantee", label: "Back Guarantee" },
+    { value: "Apple Payment", label: "Apple Payment" },
+    { value: "Credit Payment", label: "Credit Payment" },
+    { value: "Card Guarantee", label: "Card Guarantee" },
+    { value: "free shipping", label: "free shipping" },
+    { value: "secure payment", label: "secure payment" },
+    { value: "Back Guarantee", label: "Back Guarantee" },
+    { value: "Apple Payment", label: "Apple Payment" },
+    { value: "Credit Payment", label: "Credit Payment" },
+    { value: "Card Guarantee", label: "Card Guarantee" },
+
 ];
 
 const customStyles = {
@@ -24,10 +53,23 @@ const customStyles = {
         ...provided,
         backgroundColor: state.isSelected ? "#0f3460" : "white",
         color: state.isSelected ? "white" : "#0f3460",
-        "&:hover": {
-        backgroundColor: "#0f3460",
-        color: "white",
+        borderBottom: "1px solid #ddd", // Adds bottom border
+        "&:last-child": {
+            borderBottom: "none", // Removes border from last item
         },
+        "&:hover": {
+        backgroundColor: "#c9e9f5",
+        color: "black",
+        },
+    }),
+    menu: (provided) => ({
+        ...provided,
+        width: "200px", // Decreased dropdown width
+    }),
+    menuList: (provided) => ({
+        ...provided,
+        maxHeight: "300px",  // Set max height for scrolling
+        overflowY: "auto",   // Enables vertical scrolling
     }),
     singleValue: (provided) => ({
         ...provided,
@@ -35,9 +77,13 @@ const customStyles = {
     }),
 };
 
-const FilterSelect = ({setFilterList}) => {
+const FilterSelect = () => {
+    const dispatch = useDispatch();
+
     const handleChange = (selectedOption)=> {
-        setFilterList(products.filter(item => item.category ===selectedOption.value))
+    let searchData=serviceData.filter(item => item.title.toLowerCase() ===selectedOption.value.toLowerCase())
+            dispatch(filterCategory({ searchData:searchData}));
+        
     }
     return (
     <Select

@@ -1,17 +1,19 @@
 import { useState } from "react";
 import "./searchbar.css";
-import { products } from "../../utils/products";
+// import { products } from "../../utils/products";
+import { useDispatch } from "react-redux";
+import { serviceData } from "../../utils/products";
+import { filterCategory } from "../../app/features/Categories/categorySlice";
+
 // import useDebounce from "../../hooks/useDebounce";
-const SearchBar = ({ setFilterList }) => {
-  const [searchWord, setSearchWord] = useState(null);
+const SearchBar = () => {
+    const dispatch = useDispatch();
   // const debounceSearchWord = useDebounce(searchWord, 300);
   const handelChange = (input) => {
-    setSearchWord(input.target.value);
-    setFilterList(
-      products.filter((item) =>
-        item.productName?.toLowerCase().includes(searchWord?.toLowerCase())
-      )
-    );
+    
+    const searchData=serviceData.filter((item) =>item.title.toLowerCase().includes(input.target.value?.toLowerCase()))
+    dispatch(filterCategory({ searchData: searchData}));
+
   };
   return (
     <div className="search-container">

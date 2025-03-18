@@ -4,6 +4,8 @@ import Section from "../components/Section";
 import { products, discoutProducts } from "../utils/products";
 import SliderHome from "../components/Slider";
 import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = () => {
   const newArrivalData = products.filter(
@@ -15,11 +17,11 @@ const Home = () => {
     <Fragment>
       <SliderHome />
       <Wrapper />
-      <Section
+      {/* <Section
         title="Big Discount"
-        bgColor="#f6f9fc"
+        bgColor="#e8f2fc"
         productItems={discoutProducts}
-      />
+      /> */}
       <Section
         title="New Arrivals"
         bgColor="white"

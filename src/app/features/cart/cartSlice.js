@@ -55,14 +55,14 @@ export const cartSlice = createSlice({
   },
 });
 
-export const cartMiddleware = (store) => (next) => (action) => {
-  const result = next(action);
-  if (action.type?.startsWith("cart/")) {
-    const cartList = store.getState().cart.cartList;
-    localStorage.setItem("cartList", JSON.stringify(cartList));
-  }
-  return result;
-};
+// export const cartMiddleware = (store) => (next) => (action) => {
+//   const result = next(action);
+//   if (action.type?.startsWith("cart/")) {
+//     const cartList = store.getState().cart.cartList;
+//     localStorage.setItem("cartList", JSON.stringify(cartList));
+//   }
+//   return result;
+// };
 
 export const { addToCart, decreaseQty, deleteProduct } = cartSlice.actions;
 

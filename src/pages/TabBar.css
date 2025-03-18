@@ -1,0 +1,104 @@
+
+.profile-container {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .profile-card {
+    border: none;
+    background: white;
+    padding: 20px;
+  }
+  
+  .profile-banner {
+    position: relative;
+    text-align: right;
+  }
+  
+  .edit-btn {
+    position: absolute;
+    top: 40px;
+    right: -20px;
+    background: black;
+    border: none;
+  }
+
+  .profile-body {
+    margin-top: -50px;
+    padding: 20px;
+  }
+/*   
+  .profile-img {
+    width: 100px;
+    height: 100px;
+    border: 3px solid white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-right: 330px;
+  }
+   */
+  .joined-date {
+    font-weight: bold;
+    color: black;
+  }
+/*   
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+  } */
+  
+  .profile-img-container:hover .profile-img-overlay {
+    opacity: 1; /* Show on hover */
+  }
+  
+  .camera-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  /* Profile Image Container */
+.profile-img-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Profile Image */
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid #ddd;
+    margin-right: 330px;
+
+  }
+  
+  /* Edit Icon - Positioned on Top of Profile Image */
+  .profile-img-overlay {
+    position: absolute;
+    bottom: 5px; /* Moves the icon to the bottom */
+    right: 5px; /* Moves the icon to the right */
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border: 2px solid white;
+    z-index: 2; /* Ensures the icon appears above the image */
+    margin-right: 330px;
+  }
+  
+  .profile-img-overlay i {
+    font-size: 16px;
+  }
+  
+  .profile-img-overlay:hover {
+    background-color: #444;
+  }
+  
