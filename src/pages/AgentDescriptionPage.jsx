@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button, ProgressBar, Card, Form, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import productImg01 from "../Images/double-sofa-01.png";
-import ProductDetails from "../components/ProductDetails/ProductDetails";
+import AgentDetails from "../components/AgentDetails/AgentDetails";
 
 const AgentDescriptionPage = () => {
     const ratingsSummary = {
@@ -69,7 +69,7 @@ const AgentDescriptionPage = () => {
         <>
             <Container className="mt-3 p-2">
                 <Card className="p-3">
-                    <ProductDetails selectedProduct={products} />
+                    <AgentDetails selectedProduct={products} />
                 </Card>
             </Container>
             <Container className="mt-3 p-2">

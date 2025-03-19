@@ -3,6 +3,8 @@ import Unauthorized from "./pages/UnAuthorized";
 import EditAccount from "./pages/EditAccount";
 import AgentDescriptionPage from "./pages/AgentDescriptionPage";
 import PaymentOptions from "./pages/PaymentOptions";
+import NotFound from "./pages/Notfound";
+import ReviewAndComplete from "./pages/ReviewAndComplete";
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Product = lazy(() => import("./pages/Product"));
@@ -28,6 +30,8 @@ const routes = [
   { path: "/cart", element: <Cart /> },
   { path: "/account/edit", element: <EditAccount /> },
   { path: "/forgetPassword", element: <ForgetPassword /> },
+  { path: "/review", element: <ReviewAndComplete/> },
+
 
   // Private routes (Require authentication)
   {
@@ -59,6 +63,7 @@ const routes = [
     element: <RoleBasedRoute allowedRoles={["admin"]} />,
     children: [{ index: true, element: <AdminPanel /> }],
   },
+  { path: "*", element: <NotFound /> },
 ];
 
 export default routes;

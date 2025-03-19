@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import ShopList from "../components/ShopList";
 import { products } from "../utils/products";
 import { useParams } from "react-router-dom";
-import ProductDetails from "../components/ProductDetails/ProductDetails";
+import ProductDetails from "../components/AgentDetails/AgentDetails";
 import ProductReviews from "../components/ProductReviews/ProductReviews";
 import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
 

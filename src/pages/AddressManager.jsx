@@ -212,9 +212,9 @@ const AddressManagerDrop = () => {
                         </div>
                     </div>
                 </div>
-                <hr />
+                {/* <hr /> */}
                 {activeAccordion && (
-                    <button className="btn btn-primary mt-0 pt-0" onClick={toggleAddressForm}>
+                    <button className="btn btn-primary mt-2 pt-0" onClick={toggleAddressForm}>
                         {`+ Add a new ${activeAccordion} Address`}
                     </button>
                 )}

@@ -8,7 +8,8 @@ import AddressManagerDrop from "./AddressManager";
 const AgentList = () => {
     return (
         <>
-            <Container>
+            <Container style={{backgroundColor: "#f8f9fa",border:"1px solid #d4d6d9" }}>
+                    <h3 className="text-center mt-4 mb-3">Booking Form</h3>
                 <AddressManagerDrop />
             {/* </Container> */}
             {/* <Card className="p-3 mb-2" > */}

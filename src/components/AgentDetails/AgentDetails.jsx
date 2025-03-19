@@ -3,11 +3,11 @@ import { Col, Container, Row, Image, Card, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "../../app/features/cart/cartSlice";
-import "./product-details.css";
+import "./AgentDetails.css";
 import profileImg from "../../Images/profile.avif";
 import { useNavigate } from "react-router-dom";
 
-const ProductDetails = ({ selectedProduct }) => {
+const AgentDetails = ({ selectedProduct }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,7 +16,8 @@ const ProductDetails = ({ selectedProduct }) => {
     setQuantity(e.target.value);
   };
   const handelAdd = (selectedProduct, quantity) => {
-    navigate(`/experts/paymentoptions`);
+    navigate(`/review`);
+
 
     // dispatch(addToCart({ product: selectedProduct, num: quantity }));
     // toast.success("Product has been added to cart!");
@@ -65,4 +66,4 @@ const ProductDetails = ({ selectedProduct }) => {
   );
 };
 
-export default ProductDetails;
+export default AgentDetails;

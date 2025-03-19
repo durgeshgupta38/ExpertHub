@@ -114,8 +114,7 @@ const BookingForm = () => {
   // }, []);
   return (
     <div className="container mt-4">
-      <div className="card p-4" style={{ maxWidth: "600px", margin: "auto" }}>
-        <h3 className="text-center mb-3">Booking Form</h3>
+      <div className="p-4" style={{  margin: "auto" }}>
         <form onSubmit={handleSubmit}>
           {/* Pickup Date & Time */}
           <div className="row">
@@ -200,7 +199,7 @@ const BookingForm = () => {
           </div>
 
           <button type="submit" className="btn btn-primary w-100">
-            Submit Booking
+            Search for available Agents
           </button>
         </form>
       </div>
