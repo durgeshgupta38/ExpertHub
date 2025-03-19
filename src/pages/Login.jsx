@@ -21,7 +21,7 @@ const Login=()=>{
 
             // 🔹 Redirect based on role
             if (role === "admin") navigate("/admin");
-            if (role === "user") navigate("/user");
+            if (role === "user") navigate("/");
             if (role === "agent") navigate("/agent");
         } else {
             alert("Invalid credentials. Please try again.");

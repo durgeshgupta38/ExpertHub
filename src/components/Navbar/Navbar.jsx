@@ -84,7 +84,7 @@ const NavBar = () => {
               <Link
                 aria-label="Go to Home Page"
                 className="navbar-link"
-                to="/user"
+                to="/"
                 onClick={() => setExpand(false)}
               >
                 <span className="nav-link-label">Home</span>

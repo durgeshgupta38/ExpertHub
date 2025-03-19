@@ -44,7 +44,7 @@ const routes = [
 
   // Role-based routes
   {
-    path: "/user",
+    path: "/",
     element: <RoleBasedRoute allowedRoles={["user", "admin"]} />,
     children: [{ index: true, element: <Home /> }],
     // children: [{ index: true, element: <UserDashboard /> }],
