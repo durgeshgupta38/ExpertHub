@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const AddressManagerDrop = () => {
-    const [showForm, setShowForm] = useState(null);
-    const [isAccordionOpen, setIsAccordionOpen] = useState({ status: { pickup: false, delivery: false }, type: null });
-    const [selectedAddress, setSelectedAddress] = useState({ pickupIndex: null, dropIndex: null, dropOrPickup: null });
-    const [saveType, setSaveType] = useState({ addOrEdit: null, editIndex: null });
+    const [showForm, setShowForm] = useState(false);
+    const [activeAccordion, setActiveAccordion] = useState(null);
+    const [selectedAddress, setSelectedAddress] = useState({ pickupIndex: null, deliveryIndex: null });
+    const [formMode, setFormMode] = useState({ mode: null, index: null, type: null });
     const [formData, setFormData] = useState({
         id: null,
         name: "",
@@ -73,21 +73,22 @@ const AddressManagerDrop = () => {
             },
         ]
     });
+
     useEffect(() => {
-        if (!isAccordionOpen.status.pickup && !isAccordionOpen.status.delivery) {
-            setShowForm(null);
-            setIsAccordionOpen({ status: { pickup: false, delivery: false }, type: null });
+        if (!activeAccordion) {
+            setShowForm(false);
         }
-    }, [isAccordionOpen.status.delivery, isAccordionOpen.status.pickup]);
+    }, [activeAccordion]);
 
     const toggleAddressForm = () => {
         setShowForm(!showForm);
-        setSaveType({ addOrEdit: "add", editIndex: null });
+        setFormMode({ mode: "add", index: null, type: activeAccordion });
+        resetFormData();
     };
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.id]: e.target.value });
-    const cancelForm = () => {
-        setShowForm(null);
+
+    const resetFormData = () => {
         setFormData({
             id: null,
             name: "",
@@ -101,37 +102,38 @@ const AddressManagerDrop = () => {
             altPhone: "",
             workOrHome: "home",
         });
-        setSaveType({ addOrEdit: null, editIndex: null });
     };
-    const saveAddress = (e, pickOrDrop) => {
+
+    const cancelForm = () => {
+        setShowForm(false);
+        resetFormData();
+        setFormMode({ mode: null, index: null, type: null });
+    };
+
+    const saveAddress = (e) => {
         e.preventDefault();
-        if (saveType.addOrEdit === "add") {
-            setAddresses(prev => ({ ...prev, [isAccordionOpen.type]: [...prev[isAccordionOpen.type], formData] }));
-        }
-        else if (saveType.addOrEdit === "edit") {
+        const { mode, index, type } = formMode;
+        if (mode === "add") {
+            setAddresses(prev => ({ ...prev, [type]: [...prev[type], formData] }));
+        } else if (mode === "edit") {
             setAddresses(prev => {
-                const updatedAddresses = [...prev[pickOrDrop]];
-                updatedAddresses[saveType.editIndex] = formData;
-                return { ...prev, [pickOrDrop]: updatedAddresses };
+                const updatedAddresses = [...prev[type]];
+                updatedAddresses[index] = formData;
+                return { ...prev, [type]: updatedAddresses };
             });
         }
         cancelForm();
     };
-    const handleEdit = (address, dropOrPickup, index) => {
+
+    const handleEdit = (address, type, index) => {
         setFormData(address);
         setShowForm(true);
-        setSaveType({ addOrEdit: "edit", editIndex: index, dropOrPickup: dropOrPickup });
+        setFormMode({ mode: "edit", index, type });
     };
-    const handleOpenOrCloseAccordion = (type) => {
 
-        setIsAccordionOpen(prev => ({
-            status: {
-                pickup: type === "pickup" ? !prev.status.pickup : false,
-                delivery: type === "delivery" ? !prev.status.delivery : false
-            },
-            type: type
-        }));
-    }
+    const handleAccordionToggle = (type) => {
+        setActiveAccordion(prev => (prev === type ? null : type));
+    };
 
     return (
         <>
@@ -144,7 +146,7 @@ const AddressManagerDrop = () => {
                                 data-bs-target="#flush-collapseTwo"
                                 aria-expanded="false"
                                 aria-controls="flush-collapseTwo"
-                                onClick={() => handleOpenOrCloseAccordion("pickup")}
+                                onClick={() => handleAccordionToggle("pickup")}
                             >
                                 Select Pickup Address
                             </button>
@@ -159,21 +161,19 @@ const AddressManagerDrop = () => {
                                     <React.Fragment key={index}>
                                         <div className="form-check mb-2">
                                             <input className="form-check-input" type="radio" name="address" checked={selectedAddress.pickupIndex === index}
-                                                onChange={() => setSelectedAddress({ pickupIndex: index, dropIndex: null, dropOrPickup: "pickup" })}
+                                                onChange={() => setSelectedAddress({ pickupIndex: index, deliveryIndex: null })}
                                             />
                                             <label className="form-check-label">
                                                 <strong>{addr.name}</strong> {addr.phone} <br />
                                                 {addr.locality}, {addr.city}, {addr.state} - <strong>{addr.pincode}</strong>
                                             </label>
                                             {selectedAddress.pickupIndex === index && <button className="btn btn-link float-end text-primary" onClick={() => handleEdit(addr, "pickup", index)}>Edit</button>}
-
                                         </div>
                                         {addresses.pickup.length - 1 !== index && <hr />}
                                     </React.Fragment>
                                 ))}
                             </div>
                         </div>
-
                     </div>
                     <div className="accordion-item">
                         <h2 className="accordion-header">
@@ -182,7 +182,7 @@ const AddressManagerDrop = () => {
                                 data-bs-target="#flush-collapseOne"
                                 aria-expanded="false"
                                 aria-controls="flush-collapseOne"
-                                onClick={() => handleOpenOrCloseAccordion("delivery")}
+                                onClick={() => handleAccordionToggle("delivery")}
                             >
                                 Select Delivery Address
                             </button>
@@ -196,15 +196,14 @@ const AddressManagerDrop = () => {
                                 {addresses.delivery.map((addr, index) => (
                                     <React.Fragment key={index}>
                                         <div className="form-check mb-2">
-                                            <input className="form-check-input" type="radio" name="address" checked={selectedAddress.dropIndex === index}
-                                                onChange={() => setSelectedAddress({ dropIndex: index, pickupIndex: null, dropOrPickup: "delivery" })}
+                                            <input className="form-check-input" type="radio" name="address" checked={selectedAddress.deliveryIndex === index}
+                                                onChange={() => setSelectedAddress({ deliveryIndex: index, pickupIndex: null })}
                                             />
                                             <label className="form-check-label">
                                                 <strong>{addr.name}</strong> {addr.phone} <br />
                                                 {addr.locality}, {addr.city}, {addr.state} - <strong>{addr.pincode}</strong>
                                             </label>
-                                            {selectedAddress.dropIndex === index && <button className="btn btn-link float-end text-primary" onClick={() => handleEdit(addr, "delivery", index)}>Edit</button>}
-
+                                            {selectedAddress.deliveryIndex === index && <button className="btn btn-link float-end text-primary" onClick={() => handleEdit(addr, "delivery", index)}>Edit</button>}
                                         </div>
                                         {addresses.delivery.length - 1 !== index && <hr />}
                                     </React.Fragment>
@@ -214,16 +213,16 @@ const AddressManagerDrop = () => {
                     </div>
                 </div>
                 <hr />
-                {(isAccordionOpen.status.pickup || isAccordionOpen.status.delivery) && (
-                    <button className="btn btn-primary mt-0 pt-0" onClick={() => toggleAddressForm(isAccordionOpen.type)}>
-                        {`+ Add a new ${isAccordionOpen.type} Address`}
+                {activeAccordion && (
+                    <button className="btn btn-primary mt-0 pt-0" onClick={toggleAddressForm}>
+                        {`+ Add a new ${activeAccordion} Address`}
                     </button>
                 )}
 
                 {showForm && (
                     <div className="accordion-item mt-3">
                         <div className="accordion-body">
-                            <form onSubmit={(e) => saveAddress(e, saveType.dropOrPickup)}>
+                            <form onSubmit={saveAddress}>
                                 <div className="row mb-2">
                                     <div className="col-md-6">
                                         <input type="text" id="name" className="form-control" placeholder="Name" value={formData.name} onChange={handleChange} />

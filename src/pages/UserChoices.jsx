@@ -3,15 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal } from "bootstrap";
 const BookingForm = () => {
   const [formData, setFormData] = useState({
-    pickupAddress: "",
-    dropAddress: "",
     pickupTime: "",
     dropTime: "",
     pickupDate: "",
     dropDate: "",
     mode: "",
-    price: 500,
-    selectedrow:""
   });
 
   const [pickupAddresses, setPickupAddresses] = useState([]);
@@ -48,24 +44,24 @@ const BookingForm = () => {
   //   setFormData({ ...formData, [type]: value });
   // };
 
-  const handleAddAddress = (type) => {
-    // if (newAddress.length !== 0) {
-    if (type === "pickup") {
-      setPickupAddresses([...pickupAddresses, ...newAddress]);
-    } else {
-      setDropAddresses([...dropAddresses, ...newAddress]);
-    }
-    setNewAddress([]);
-    // }
-  };
-  console.log(dropAddresses)
-  const handleDeleteAddress = (type, id) => {
-    if (type === "pickup") {
-      setPickupAddresses(pickupAddresses.filter((val, i) => val.id !== id));
-    } else {
-      setDropAddresses(dropAddresses.filter((val, i) => val.id !== id));
-    }
-  };
+  // const handleAddAddress = (type) => {
+  //   // if (newAddress.length !== 0) {
+  //   if (type === "pickup") {
+  //     setPickupAddresses([...pickupAddresses, ...newAddress]);
+  //   } else {
+  //     setDropAddresses([...dropAddresses, ...newAddress]);
+  //   }
+  //   setNewAddress([]);
+  //   // }
+  // };
+  // console.log(dropAddresses)
+  // const handleDeleteAddress = (type, id) => {
+  //   if (type === "pickup") {
+  //     setPickupAddresses(pickupAddresses.filter((val, i) => val.id !== id));
+  //   } else {
+  //     setDropAddresses(dropAddresses.filter((val, i) => val.id !== id));
+  //   }
+  // };
 
   //   const handleEditAddress = (type, index) => {
   //     setEditingAddress({ type, index, value: type === "pickup" ? pickupAddresses[index] : dropAddresses[index] });
@@ -86,36 +82,36 @@ const BookingForm = () => {
   //       setEditingAddress(null);
   //     }
   //   };
-  const handleEditAddress = (type, address) => {
-    setEditingAddress(address);
-    setEditType(type);
-  };
+  // const handleEditAddress = (type, address) => {
+  //   setEditingAddress(address);
+  //   setEditType(type);
+  // };
 
-  const handleUpdateAddress = () => {
-    if (editingAddress) {
-      if (editType === "pickup") {
-        setPickupAddresses(
-          pickupAddresses.map((addr) => (addr.id === editingAddress.id ? editingAddress : addr))
-        );
-      } else {
-        setDropAddresses(
-          dropAddresses.map((addr) => (addr.id === editingAddress.id ? editingAddress : addr))
-        );
-      }
-      setEditingAddress(null);
-    }
-  };
+  // const handleUpdateAddress = () => {
+  //   if (editingAddress) {
+  //     if (editType === "pickup") {
+  //       setPickupAddresses(
+  //         pickupAddresses.map((addr) => (addr.id === editingAddress.id ? editingAddress : addr))
+  //       );
+  //     } else {
+  //       setDropAddresses(
+  //         dropAddresses.map((addr) => (addr.id === editingAddress.id ? editingAddress : addr))
+  //       );
+  //     }
+  //     setEditingAddress(null);
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
   };
-  useEffect(() => {
-    const modalElement = document.getElementById("editModal");
-    if (modalElement) {
-      new Modal(modalElement);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const modalElement = document.getElementById("editModal");
+  //   if (modalElement) {
+  //     new Modal(modalElement);
+  //   }
+  // }, []);
   return (
     <div className="container mt-4">
       <div className="card p-4" style={{ maxWidth: "600px", margin: "auto" }}>
@@ -202,70 +198,7 @@ const BookingForm = () => {
               ))}
             </div>
           </div>
-          <div className="modal fade" id="editModal" tabIndex="-1" aria-hidden="true">
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Edit Address</h5>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div className="modal-body">
-                  {editingAddress && (
-                    <>
-                      <input
-                        type="text"
-                        className="form-control mb-2"
-                        placeholder="Address 1"
-                        value={editingAddress.address1}
-                        onChange={(e) => setEditingAddress({ ...editingAddress, address1: e.target.value })}
-                      />
-                      <input
-                        type="text"
-                        className="form-control mb-2"
-                        placeholder="Address 2"
-                        value={editingAddress.address2}
-                        onChange={(e) => setEditingAddress({ ...editingAddress, address2: e.target.value })}
-                      />
-                      <input
-                        type="text"
-                        className="form-control mb-2"
-                        placeholder="City"
-                        value={editingAddress.city}
-                        onChange={(e) => setEditingAddress({ ...editingAddress, city: e.target.value })}
-                      />
-                      <input
-                        type="text"
-                        className="form-control mb-2"
-                        placeholder="State"
-                        value={editingAddress.state}
-                        onChange={(e) => setEditingAddress({ ...editingAddress, state: e.target.value })}
-                      />
-                      <input
-                        type="text"
-                        className="form-control mb-2"
-                        placeholder="Zip Code"
-                        value={editingAddress.zipcode}
-                        onChange={(e) => setEditingAddress({ ...editingAddress, zipcode: e.target.value })}
-                      />
-                    </>
-                  )}
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                    ❌ Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-success"
-                    data-bs-dismiss="modal"
-                    onClick={handleUpdateAddress}
-                  >
-                    ✅ Update
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <button type="submit" className="btn btn-primary w-100">
             Submit Booking
           </button>
