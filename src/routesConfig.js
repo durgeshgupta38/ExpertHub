@@ -19,7 +19,7 @@ const ForgetPassword = lazy(() => import("./pages/ForgetPassword"))
 
 
 const routes = [
-  // { path: "/", element: <Home /> },
+  { path: "/", element: <Home /> },
   { path: "/profile", element: <TabBar /> },
   { path: "/signup", element: <SignUp /> },
   { path: "/login", element: <Login /> },
@@ -27,7 +27,6 @@ const routes = [
   { path: "/account/edit", element: <EditAccount /> },
   { path: "/forgetPassword", element: <ForgetPassword /> },
   { path: "/review", element: <ReviewAndComplete/> },
-
 
   // Private routes (Require authentication)
   {
@@ -44,7 +43,7 @@ const routes = [
 
   // Role-based routes
   {
-    path: "/",
+    path: "/user",
     element: <RoleBasedRoute allowedRoles={["user", "admin"]} />,
     children: [{ index: true, element: <Home /> }],
     // children: [{ index: true, element: <UserDashboard /> }],
