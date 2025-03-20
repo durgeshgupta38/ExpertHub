@@ -1,26 +1,18 @@
 import { useState } from "react";
 import { Col, Container, Row, Image, Card, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import { addToCart } from "../../app/features/cart/cartSlice";
 import "./AgentDetails.css";
 import profileImg from "../../Images/profile.avif";
 import { useNavigate } from "react-router-dom";
+import useWindowScrollToTop from "../../hooks/useWindowScrollToTop";
 
 const AgentDetails = ({ selectedProduct }) => {
+  useWindowScrollToTop()
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [quantity, setQuantity] = useState(1);
-  const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
-  };
-  const handelAdd = (selectedProduct, quantity) => {
+  const handeBookNow = () => {
     navigate(`/review`);
-
-
-    // dispatch(addToCart({ product: selectedProduct, num: quantity }));
-    // toast.success("Product has been added to cart!");
   };
 
   return (
@@ -34,15 +26,10 @@ const AgentDetails = ({ selectedProduct }) => {
             <h2>Product name Delivery {selectedProduct?.productName}</h2>
             <div className="rate">
               <div className="stars">
-              <span>Rating: {selectedProduct?.avgRating}4.7<i className="stars fa fa-star"></i></span>
-                {/* <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i> */}
+                <span>Rating: {selectedProduct?.avgRating}4.7<i className="stars fa fa-star"></i></span>
+
               </div>
-                
-                {/* <span>Rating:{selectedProduct?.avgRating}4.7<i className="stars fa fa-star"></i></span> */}
+
             </div>
             <div className="info">
               <span className="prices">Service Charges: {selectedProduct?.price} 30000</span>
@@ -55,7 +42,7 @@ const AgentDetails = ({ selectedProduct }) => {
               aria-label="Add"
               type="submit"
               className="add"
-              onClick={() => handelAdd(selectedProduct, quantity)}
+              onClick={() => handeBookNow()}
             >
               Book Now
             </button>

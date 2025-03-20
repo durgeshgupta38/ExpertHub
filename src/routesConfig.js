@@ -6,8 +6,6 @@ import PaymentOptions from "./pages/PaymentOptions";
 import NotFound from "./pages/Notfound";
 import ReviewAndComplete from "./pages/ReviewAndComplete";
 const Home = lazy(() => import("./pages/Home"));
-const Cart = lazy(() => import("./pages/Cart"));
-const Product = lazy(() => import("./pages/Product"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Login = lazy(() => import("./pages/Login"));
 const AgentDashboard = lazy(() => import("./pages/AgentDashboard"))
@@ -26,8 +24,6 @@ const routes = [
   { path: "/signup", element: <SignUp /> },
   { path: "/login", element: <Login /> },
   { path: "/unauthorized", element: <Unauthorized /> },
-  { path: "/shop/:id", element: <Product /> },
-  { path: "/cart", element: <Cart /> },
   { path: "/account/edit", element: <EditAccount /> },
   { path: "/forgetPassword", element: <ForgetPassword /> },
   { path: "/review", element: <ReviewAndComplete/> },

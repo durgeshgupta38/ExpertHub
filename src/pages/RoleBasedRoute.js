@@ -7,7 +7,7 @@ const RoleBasedRoute = ({ allowedRoles }) => {
   if (!isAuthenticated) return <Navigate to="/login" />;
   if (!allowedRoles.includes(role)) return <Navigate to="/unauthorized" />;
 
-  return <Outlet />; // Render child routes if role is allowed;
+  return <Outlet />;
 };
 
 export default RoleBasedRoute;

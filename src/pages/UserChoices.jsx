@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal } from "bootstrap";
 const BookingForm = () => {
@@ -9,15 +9,6 @@ const BookingForm = () => {
     dropDate: "",
     mode: "",
   });
-
-  const [pickupAddresses, setPickupAddresses] = useState([]);
-
-  const [dropAddresses, setDropAddresses] = useState([]);
-
-  const [newAddress, setNewAddress] = useState([]);
-  const [editingAddress, setEditingAddress] = useState(null);
-  const [editType, setEditType] = useState(""); // "pickup" or "drop"
-  const [showDropdown, setShowDropdown] = useState({ pickup: false, drop: false });
 
   const formatTime12Hour = (time) => {
     if (!time) return "";
@@ -40,81 +31,14 @@ const BookingForm = () => {
 
   const today = new Date();
   const formattedToday = today.toISOString().split("T")[0];
-  // const handleChange = (type, value) => {
-  //   setFormData({ ...formData, [type]: value });
-  // };
-
-  // const handleAddAddress = (type) => {
-  //   // if (newAddress.length !== 0) {
-  //   if (type === "pickup") {
-  //     setPickupAddresses([...pickupAddresses, ...newAddress]);
-  //   } else {
-  //     setDropAddresses([...dropAddresses, ...newAddress]);
-  //   }
-  //   setNewAddress([]);
-  //   // }
-  // };
-  // console.log(dropAddresses)
-  // const handleDeleteAddress = (type, id) => {
-  //   if (type === "pickup") {
-  //     setPickupAddresses(pickupAddresses.filter((val, i) => val.id !== id));
-  //   } else {
-  //     setDropAddresses(dropAddresses.filter((val, i) => val.id !== id));
-  //   }
-  // };
-
-  //   const handleEditAddress = (type, index) => {
-  //     setEditingAddress({ type, index, value: type === "pickup" ? pickupAddresses[index] : dropAddresses[index] });
-  //     setEditType(type);
-  //   };
-  // console.log(editingAddress,'editingAddress')
-  //   const handleUpdateAddress = () => {
-  //     if (editingAddress) {
-  //       if (editType === "pickup") {
-  //         const updatedList = [...pickupAddresses];
-  //         updatedList[editingAddress.index] = editingAddress.value;
-  //         setPickupAddresses(updatedList);
-  //       } else {
-  //         const updatedList = [...dropAddresses];
-  //         updatedList[editingAddress.index] = editingAddress.value;
-  //         setDropAddresses(updatedList);
-  //       }
-  //       setEditingAddress(null);
-  //     }
-  //   };
-  // const handleEditAddress = (type, address) => {
-  //   setEditingAddress(address);
-  //   setEditType(type);
-  // };
-
-  // const handleUpdateAddress = () => {
-  //   if (editingAddress) {
-  //     if (editType === "pickup") {
-  //       setPickupAddresses(
-  //         pickupAddresses.map((addr) => (addr.id === editingAddress.id ? editingAddress : addr))
-  //       );
-  //     } else {
-  //       setDropAddresses(
-  //         dropAddresses.map((addr) => (addr.id === editingAddress.id ? editingAddress : addr))
-  //       );
-  //     }
-  //     setEditingAddress(null);
-  //   }
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
   };
-  // useEffect(() => {
-  //   const modalElement = document.getElementById("editModal");
-  //   if (modalElement) {
-  //     new Modal(modalElement);
-  //   }
-  // }, []);
   return (
     <div className="container mt-4">
-      <div className="p-4" style={{  margin: "auto" }}>
+      <div className="p-4" style={{ margin: "auto" }}>
         <form onSubmit={handleSubmit}>
           {/* Pickup Date & Time */}
           <div className="row">

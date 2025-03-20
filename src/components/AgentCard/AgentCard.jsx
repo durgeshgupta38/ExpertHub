@@ -3,8 +3,7 @@ import { Col, Row, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../app/features/cart/cartSlice";
-import "./product-card.css";
+import "./agentcard.css";
 
 const ProductCard = ({ productItem }) => {
   const dispatch = useDispatch();

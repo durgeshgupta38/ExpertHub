@@ -1,7 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
 
 const ReviewAndComplete=()=>{
+  useWindowScrollToTop()
+
       const navigate = useNavigate();
     
     const handleComplete=()=>{
@@ -25,7 +28,6 @@ const ReviewAndComplete=()=>{
         <h6 className="mt-3 fw-bold">Agent:</h6> john Dey
         <h6 className="mt-3 fw-bold">Service:</h6> Car review by experts
         {/* <div className="w-100 mb-3 overflow-auto d-flex gap-2" style={{ whiteSpace: "nowrap" }}> */}
-            
               <button
                 // key={method}
                 className="btn btn-outline-primary"

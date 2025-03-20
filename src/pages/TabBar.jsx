@@ -3,8 +3,6 @@ import { useNavigate} from "react-router-dom";
 import { Container, Row, Col, Tab, Nav, Button, Image, Card, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./TabBar.css";
-import profileImg from "../Images/profile.avif";
-import ProductPage from "./AgentDescriptionPage";
 import BookingTable from "./MyBookings";
 import Admin from "./Admin";
 
@@ -33,10 +31,10 @@ const TabBar = () => {
             <Nav.Link eventKey="account">Account</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="wishlist">My Wish List</Nav.Link>
+            <Nav.Link eventKey="My Bookings">My Bookings</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="orders">My Orders</Nav.Link>
+            <Nav.Link eventKey="orders">Others</Nav.Link>
           </Nav.Item>
         </Nav>
 
@@ -91,10 +89,9 @@ const TabBar = () => {
           </Tab.Pane>
 
           {/* My Wish List Section */}
-          <Tab.Pane eventKey="wishlist">
+          <Tab.Pane eventKey="My Bookings">
             <Card className="profile-card">
-              <h3>My Wish List</h3>
-              <p>You have no items in your wish list.</p>
+              <p>Below are the list of all service booked by you.</p>
               <BookingTable/>
               {/* <Admin/> */}
             </Card>
@@ -103,9 +100,8 @@ const TabBar = () => {
           {/* My Orders Section */}
           <Tab.Pane eventKey="orders">
             <Card className="profile-card">
-              <h3>My Orders</h3>
+              {/* <h3>My Orders</h3> */}
               <p>No orders found. Start shopping now!</p>
-              <ProductPage/>
             </Card>
           </Tab.Pane>
         </Tab.Content>

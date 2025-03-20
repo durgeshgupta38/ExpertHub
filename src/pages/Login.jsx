@@ -26,16 +26,6 @@ const Login=()=>{
         } else {
             alert("Invalid credentials. Please try again.");
         }
-        // login("fake-token", role); // Assign a role when logging in
-        // if(role === "admin"){
-        //     navigate("/admin");
-        // }
-        // if(role === "user"){
-        //     navigate("/user");
-        // }
-        // if(role === "agent"){
-        //     navigate("/agent");
-        // }
       };
 
     return (

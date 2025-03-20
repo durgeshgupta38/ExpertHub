@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Card } from "react-bootstrap";
-import ProductCard from "../components/ProductCard/ProductCard";
+import ProductCard from "../components/AgentCard/AgentCard";
 import { products } from "../utils/products";
 import UserChoices from "./UserChoices";
 import AddressManagerDrop from "./AddressManager";

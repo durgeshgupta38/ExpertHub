@@ -8,7 +8,6 @@ const SignUp =()=>{
         return emailRegex.test(email);
     }
     const handleEmail=(e)=>{
-        console.log(e.target.value)
         setEmail(e.target.value)
     }
     return (
@@ -27,6 +26,10 @@ const SignUp =()=>{
               <div className="mb-3">
                   <label htmlFor="password" className="form-label">Password</label>
                   <input type="password" className="form-control" autoComplete="new-password" id="password" placeholder="Enter your password" required/>
+              </div>
+              <div className="mb-3">
+                  <label htmlFor="confirm password" className="form-label">Confirm Password</label>
+                  <input type="password" className="form-control" autoComplete="new-password" id=" confirm password" placeholder="Enter password to confirm" required/>
               </div>
               <div className="mb-3">
                     <label htmlFor="contact" className="form-label">Contact Number</label>

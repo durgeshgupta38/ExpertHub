@@ -5,7 +5,7 @@ import FilterSelect from "../components/FilterSelect";
 import SearchBar from "../components/SeachBar/SearchBar";
 import { useSelector } from "react-redux";
 
-const Shop = () => {
+const CategoryList = () => {
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,83 +85,4 @@ const Shop = () => {
   );
 };
 
-export default Shop;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Col, Container, Row } from "react-bootstrap";
-// import FilterSelect from "../components/FilterSelect";
-// import SearchBar from "../components/SeachBar/SearchBar";
-// import { Fragment, useState } from "react";
-// import { products, serviceData } from "../utils/products";
-// import { useSelector} from 'react-redux'
-// import ShopList from "../components/ShopList";
-// import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
-// import { useNavigate } from "react-router-dom";
-// const Shop = () => {
-//   // const [filterList, setFilterList] = useState(
-//   //   products.filter((item) => item.category === "sofa")
-//   // );
-//   useWindowScrollToTop();
-//   const count = useSelector((state) =>state?.category?.categoryList)
-//   const navigate = useNavigate();
-//   return (
-//     <Fragment>
-//       {/* <Banner title="product" /> */}
-//       <section className="filter-bar">
-//         <Container className="filter-bar-contianer">
-//           <Row className="justify-content-center">
-//             <Col md={4}>
-//               <FilterSelect/>
-//             </Col>
-//             <Col md={8}>
-//               <SearchBar/>
-//             </Col>
-//           </Row>
-//         </Container>
-//         <Container className="mt-4">
-//                   <Row>
-//                     {count.map((val, index) => {
-//                       return (
-//                         <Col md={3} sm={5} xs={9} style={{ backgroundColor: val.bg }} className='feature' key={index}>
-//                           <div className='icon'>
-//                             {val.icon}
-//                           </div>
-//                           <h3>{val.title}</h3>
-//                           <button className="viewExperts" onClick={() => navigate(`/experts/${val.id}`)}>{val.subtitle}</button>
-//                         </Col>
-//                       )
-//                     })}
-//                   </Row>
-//         </Container>
-//       </section>
-//     </Fragment>
-//   );
-// };
-
-// export default Shop;
+export default CategoryList
