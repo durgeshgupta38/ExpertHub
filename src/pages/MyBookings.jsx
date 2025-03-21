@@ -8,9 +8,9 @@ const BookingTable = () => {
     const [selectedBooking, setSelectedBooking] = useState(null);
 
     const [bookings, setBookings] = useState([
-        { id: 1, date: "2025-03-15", category: "Delivery", agent: "John Doe", details: "Package delivery from NYC to LA." },
-        { id: 2, date: "2025-03-16", category: "Medical Help", agent: "Alice Smith", details: "Home visit for health check-up." },
-        { id: 3, date: "2025-03-17", category: "Shopping", agent: "Bob Williams", details: "Grocery shopping assistance." },
+        { id: 1, date: "2025-03-15", category: "Delivery", agent: "John Doe", details: "Package delivery from NYC to LA." ,status:"Pending"},
+        { id: 2, date: "2025-03-16", category: "Medical Help", agent: "Alice Smith", details: "Home visit for health check-up.",status:"Accepted" },
+        { id: 3, date: "2025-03-17", category: "Shopping", agent: "Bob Williams", details: "Grocery shopping assistance.",status:"Rejected" },
     ]);
 
     // Handle View Details Click
@@ -29,6 +29,8 @@ const BookingTable = () => {
                         <th>Category</th>
                         <th>Agent</th>
                         <th>View Details</th>
+                        <th>status</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +69,8 @@ const BookingTable = () => {
                                         View Details
                                     </Button>
                                 </td>
+                                <td style={{color:booking.status=="Pending"?"orange":booking.status=="Accepted"?"green":"red"}}>{booking.status}</td>
+
                             </tr>
                         ))
                     ) : (

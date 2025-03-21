@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import "./AgentDetails.css";
 import profileImg from "../../Images/profile.avif";
 import { useNavigate } from "react-router-dom";
-import useWindowScrollToTop from "../../hooks/useWindowScrollToTop";
+import useWindowScrollToTop from "../../customHooks/useWindowScrollToTop";
 
 const AgentDetails = ({ selectedProduct }) => {
   useWindowScrollToTop()

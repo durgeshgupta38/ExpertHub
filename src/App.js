@@ -8,8 +8,12 @@ import Loader from "./components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import routes from "./routesConfig";
+import Breadcrumbs from "./components/Breadcum/Breadcum";
+import AutoLogout from "./pages/AutoLogout";
+// import useAutoLogout from "./customHooks/useAutoLogout";
 
 function App() {
+  // useAutoLogout();
   return (
     <AuthProvider>
       <Router>
@@ -24,8 +28,12 @@ function App() {
           pauseOnHover
           theme="light"
         />
+     {/* <AutoLogout/> */}
         <NavBar />
+        {/* <Breadcrumbs/> */}
+     
         <Suspense fallback={<Loader />}>
+        
           <Routes>
             {routes.map(({ path, element, children }, index) => (
               <Route key={index} path={path} element={element}>

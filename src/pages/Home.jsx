@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Wrapper from "../components/wrapper/Wrapper";
 import { products} from "../utils/products";
 import SliderHome from "../components/Slider";
-import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
+import useWindowScrollToTop from "../customHooks/useWindowScrollToTop";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 

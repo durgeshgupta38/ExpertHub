@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
+import useWindowScrollToTop from "../customHooks/useWindowScrollToTop";
 
 const ReviewAndComplete=()=>{
   useWindowScrollToTop()
