@@ -1,17 +1,13 @@
-import { Suspense } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./pages/AuthContext";
-import NavBar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import Loader from "./components/Loader/Loader";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import routes from "./routesConfig";
-import Breadcrumbs from "./components/Breadcum/Breadcum";
-import AutoLogout from "./pages/AutoLogout";
-// import useAutoLogout from "./customHooks/useAutoLogout";
-
+import { Suspense } from "react";
+import { ToastContainer } from "react-bootstrap";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import NavBar from "./ComponentReuse/Navbar/Navbar";
+import Breadcrumbs from "./ComponentReuse/Breadcrumb/Breadcum";
+import {AuthProvider }from "./ContextApi/AuthContext";
+import Footer from "./ComponentReuse/Footer/Footer"; 
+import routes from "./Routes/routesConfig";
+import Loader from "./ComponentReuse/Loader/Loader"; 
 function App() {
   // useAutoLogout();
   return (
@@ -30,7 +26,7 @@ function App() {
         />
      {/* <AutoLogout/> */}
         <NavBar />
-        {/* <Breadcrumbs/> */}
+        <Breadcrumbs/>
      
         <Suspense fallback={<Loader />}>
         
