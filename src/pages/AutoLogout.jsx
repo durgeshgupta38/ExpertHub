@@ -10,7 +10,8 @@ const AutoLogout = () => {
   const logoutUser = () => {
     clearTimeout(timeoutRef.current);
     logout(); 
-    alert("You have been logged out due to inactivity.");
+    alert("You have been logged out due to Inactivity.");
+    
     // Perform logout logic here, such as clearing tokens or session storage
     navigate("/login");
   };
