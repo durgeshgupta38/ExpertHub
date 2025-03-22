@@ -1,58 +1,66 @@
-import React,{useState} from "react"
-import { useAuth } from "../../ContextApi/AuthContext";
-import { useNavigate } from "react-router-dom";
-import "../Registration/Signup.css"
-const Login=()=>{
-    const { login } = useAuth();
-    const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-  
-    const handleLogin = () => {
-        const userDatabase = {
-            "user@example.com": { password: "user123", role: "user" },
-            "agent@example.com": { password: "agent123", role: "agent" },
-            "admin@example.com": { password: "admin123", role: "admin" },
-        };
+import React, { useState } from "react"
+import { Link } from "react-router-dom";
 
-        if (userDatabase[email] && userDatabase[email].password === password) {
-            const role = userDatabase[email].role;
-            login("fake-token", role); // Store token and role
+import LoginWithOTP from "./LoginWithOTP";
+import LoginWithEmail from "./LoginWithEmail";
+import LoginWithGoogle from "./LoginWithGoogle";
+const Login = () => {
+    const [{ otp, google }, setLoginMethods] = useState({ otp: false, google: false });
 
-            // 🔹 Redirect based on role
-            if (role === "admin") navigate("/admin");
-            if (role === "user") navigate("/");
-            if (role === "agent") navigate("/agent");
+    const handleLoginMethod = (method) => {
+        if (method === "otp") {
+            setLoginMethods({ otp: true, google: false });
+        } else if (method === "google") {
+            setLoginMethods({ otp: false, google: true });
         } else {
-            alert("Invalid credentials. Please try again.");
+            setLoginMethods({ otp: false, google: false });
         }
-      };
+    }
 
     return (
-        <div className="container">
-        <div className="login-container">
-            <h3 className="text-center">Login</h3>
-            <form onSubmit={handleLogin}>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email" placeholder="Enter your email" value={email}
-                            onChange={(e) => setEmail(e.target.value)} required/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="password"autoComplete="current-password" placeholder="Enter your password" value={password}
-                            onChange={(e) => setPassword(e.target.value)} required/>
-                </div>
-                {/* <button type="submit" className="btn btn-primary w-100">Login</button>
-                 */}
-                       <button type="submit" className="btn btn-primary w-100">Login </button>
+        <>
+            <div className="container">
+                <div className="login-container">
+                    {otp && <LoginWithOTP />}
+                    {!otp && !google && <LoginWithEmail />}
 
-            </form>
-            <p className="text-center mt-3">Don't have an account? <a href="/signup">Sign Up</a></p>
-            <p className="text-center mt-3">Forgot Password? <a href="/forgetPassword">Forgot Password?</a></p>
+                    <p className="text-center mt-3"> OR </p>
+                    {otp && (
+                        <>
+                        <LoginWithGoogle />
+                            <button type="button" onClick={() => handleLoginMethod("email")} className="btn btn-primary w-100 mt-1">
+                                Login with Email
+                            </button>
+                        </>
+                    )}
 
-        </div>
-         </div>
+                    {google && (
+                        <>
+                            <button type="button" onClick={() => handleLoginMethod("otp")} className="btn btn-success w-100">
+                                Login with OTP
+                            </button>
+                            <button type="button" onClick={() => handleLoginMethod("email")} className="btn btn-primary w-100 mt-1">
+                                Login with Email
+                            </button>
+                        </>
+                    )}
+
+                    {!otp && !google && (
+                        <>
+                        <LoginWithGoogle />
+                            <button type="button" onClick={() => handleLoginMethod("otp")} className="btn btn-success w-100 mt-1">
+                                Login with OTP
+                            </button>
+                        </>
+                    )}
+
+                    <p className="text-center mt-3 mb-1">Don't have an account? <Link to="/signup">Sign Up</Link></p>
+                    <p className="text-center">Forgot Password? <Link to="/forgetPassword">Forgot Password</Link></p>
+
+                </div>
+            </div>
+
+        </>
     )
 }
 export default Login

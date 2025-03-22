@@ -1,5 +1,5 @@
 import { useAuth } from "../ContextApi/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LogoutButton = () => {
   const { logout } = useAuth();
@@ -7,10 +7,10 @@ const LogoutButton = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login"); // Redirect to login page after logout
+    // navigate("/login");
   };
 
-  return <button onClick={handleLogout}>Sign Out</button>;
+  return <Link className="nav-link" to="/login" onClick={handleLogout}>Logout</Link>
 };
 
 export default LogoutButton;
