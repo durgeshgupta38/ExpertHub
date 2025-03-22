@@ -3,7 +3,7 @@ import { Container, Card, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-
+import "./forgotPassword.css";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
@@ -14,8 +14,8 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
-      <Card className="p-4 shadow-sm" style={{ width: "350px" }}>
+    <Container className="forgetCont d-flex justify-content-center align-items-center vh-100">
+      <Card className="p-4 shadow-sm cardWidth">
         <h4 className="text-center mb-3">Forgot Password</h4>
         <p className="text-center text-muted small">
           Enter your email to receive a password reset link.

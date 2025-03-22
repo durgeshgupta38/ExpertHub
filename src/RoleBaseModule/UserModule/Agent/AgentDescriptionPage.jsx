@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, ProgressBar, Card, Form, Image } from "rea
 import "bootstrap/dist/css/bootstrap.min.css";
 import productImg01 from "../../../Assets/Images/arm-chair-01.jpg";
 import AgentDetails from "./AgentDetails/AgentDetails";
-
+import "./agent.css";
 const AgentDescriptionPage = () => {
     const ratingsSummary = {
         average: 4.3,
@@ -89,9 +89,9 @@ const AgentDescriptionPage = () => {
                                         <Col xs={2} className="small">{star}★</Col>
                                         <Col xs={7}>
                                             <ProgressBar
+                                            className="progress"
                                                 now={(ratingsSummary.breakdown[star] / ratingsSummary.totalRatings) * 100}
                                                 variant={getProgressColor(parseInt(star))}
-                                                style={{ height: "6px" }}
                                             />
                                         </Col>
                                         <Col xs={3} className="small">{ratingsSummary.breakdown[star]}</Col>
@@ -118,7 +118,7 @@ const AgentDescriptionPage = () => {
                                 <Row>
                                     {review.images.map((img, i) => (
                                         <Col xs={2} key={i}>
-                                            <Image src={img} fluid rounded style={{ width: "45px", height: "45px" }} />
+                                            <Image src={img} fluid rounded className="imgreview" />
                                         </Col>
                                     ))}
                                 </Row>
@@ -160,7 +160,7 @@ const AgentDescriptionPage = () => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-1">
                             <Form.Label className="small mb-0">Name</Form.Label>
-                            <Form.Control type="text" name="name" value={newReview.name} onChange={handleChange} required size="sm" style={{ border: "1px solid #d4d5d6" }} />
+                            <Form.Control type="text" name="name" value={newReview.name} onChange={handleChange} required size="sm" className="formCont" />
                         </Form.Group>
 
                         <Form.Group className="mb-1">

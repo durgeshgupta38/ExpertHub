@@ -1,0 +1,15 @@
+.cardImage{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid #ddd
+}
+.reviewDetails{
+     width: 50rem;
+      background-color: #f8f9fa;
+      border:1px solid #d4d6d9;
+}
+.formClass{
+     margin: auto;
+}

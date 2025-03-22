@@ -1,8 +1,29 @@
+/* Ensure the entire page takes up at least full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure the main container grows to fill space above the footer */
+#root, .app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex: 1;
+}
+
+/* Push the footer to the bottom */
 footer {
   background-color: #0f3460;
   padding: 15px 0;
   color: white;
   text-align: left;
+  width: 100%;
+  margin-top: auto; /* Pushes footer to bottom */
 }
 
 .footer-box {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table, Button, Card, Modal } from "react-bootstrap";
 import productImg01 from "../../../Assets/Images/arm-chair-01.jpg";
-
+import "./booking.css"
 const BookingTable = () => {
     const [hoveredRow, setHoveredRow] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -49,14 +49,7 @@ const BookingTable = () => {
                                     <Card.Img
                                         variant="left"
                                         src={productImg01}
-                                        style={{
-                                            width: "30px",
-                                            height: "30px",
-                                            objectFit: "cover",
-                                            marginRight: "10px",
-                                            border: "2px solid #ddd",
-                                        }}
-                                        className="rounded-circle"
+                                        className="rounded-circle cardImage"
                                     />
                                     {booking.agent}
                                 </td>

@@ -1,8 +1,9 @@
-
+/* TabBar starts */
 .profile-container {
     background: #f8f9fa;
     padding: 20px;
     border-radius: 10px;
+    min-height: 100vh;
   }
 
   .profile-card {
@@ -28,26 +29,10 @@
     margin-top: -50px;
     padding: 20px;
   }
-/*   
-  .profile-img {
-    width: 100px;
-    height: 100px;
-    border: 3px solid white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    margin-right: 330px;
-  }
-   */
   .joined-date {
     font-weight: bold;
     color: black;
   }
-/*   
-  .profile-img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-  } */
-  
   .profile-img-container:hover .profile-img-overlay {
     opacity: 1; /* Show on hover */
   }
@@ -102,3 +87,24 @@
     background-color: #444;
   }
   
+  /* EditAccount starts */
+
+.fullName{
+ border: 1px solid #d4d4d4;
+}
+.addresstoggle{
+   padding: 2px 6px;
+    font-size: 14px;
+     border: 1px solid #d4d4d4;
+}
+.commonStyles{
+padding: 1px 4px;
+ font-size: 12px;
+}
+.submittype{
+  padding: 3px 8px;
+   font-size: 14px;
+}
+.profileImag{
+  display: none
+}

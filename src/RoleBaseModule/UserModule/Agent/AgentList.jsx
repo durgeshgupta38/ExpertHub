@@ -4,11 +4,11 @@ import ProductCard from "./AgentCard/AgentCard"
 import { products } from "../../../Utils/products";
 import UserChoices from "../Booking/UserChoices";
 import AddressManagerDrop from "../Booking/AddressManager";
-
+import "./agent.css";
 const AgentList = () => {
     return (
         <>
-            <Container style={{backgroundColor: "#f8f9fa",border:"1px solid #d4d6d9" }}>
+            <Container className="agentList mt-4 pb-4">
                     <h3 className="text-center mt-4 mb-3">Booking Form</h3>
                 <AddressManagerDrop />
             {/* </Container> */}

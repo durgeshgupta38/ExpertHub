@@ -1,0 +1,9 @@
+.filter{
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    display:flex;
+    justify-content:space-between;
+  }

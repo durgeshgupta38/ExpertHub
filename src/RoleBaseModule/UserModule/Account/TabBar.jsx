@@ -1,14 +1,21 @@
-import React, { useState } from "react";
-import { useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate} from "react-router-dom";
 import { Container, Row, Col, Tab, Nav, Button, Image, Card, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./TabBar.css";
+import "./account.css";
 import BookingTable from "../Booking/MyBookings";
-import Admin from "../../AdminModule/Admin";
 
 const TabBar = () => {
   const [profileImage, setProfileImage] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const defaultTab = queryParams.get("tab") || "account";
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  useEffect(() => {
+    setActiveTab(defaultTab);
+  }, [defaultTab]);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -24,17 +31,17 @@ const TabBar = () => {
   return (
     <>
     <Container className="profile-container mt-4">
-      <Tab.Container defaultActiveKey="account">
+      <Tab.Container activeKey={activeTab} onSelect={(key) => setActiveTab(key)}>
         {/* Tabs Navigation */}
         <Nav variant="tabs" className="profile-tabs">
           <Nav.Item>
-            <Nav.Link eventKey="account">Account</Nav.Link>
+            <Nav.Link eventKey="account" onClick={()=>navigate("/profile?tab=account")}>Account</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="My Bookings">My Bookings</Nav.Link>
+            <Nav.Link eventKey="myBooking"onClick={()=>navigate("/profile?tab=myBooking")}>My Bookings</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="orders">Others</Nav.Link>
+            <Nav.Link eventKey="notification"  onClick={()=>navigate("/profile?tab=notification")}>Notifications</Nav.Link>
           </Nav.Item>
         </Nav>
 
@@ -57,7 +64,7 @@ const TabBar = () => {
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
-                        style={{ display: "none" }}
+                        className="profileImag"
                       />
                     </div>
                   </div>
@@ -88,20 +95,16 @@ const TabBar = () => {
             </Card>
           </Tab.Pane>
 
-          {/* My Wish List Section */}
-          <Tab.Pane eventKey="My Bookings">
+          <Tab.Pane eventKey="myBooking">
             <Card className="profile-card">
               <p>Below are the list of all service booked by you.</p>
               <BookingTable/>
-              {/* <Admin/> */}
             </Card>
           </Tab.Pane>
 
-          {/* My Orders Section */}
-          <Tab.Pane eventKey="orders">
+          <Tab.Pane eventKey="notification">
             <Card className="profile-card">
-              {/* <h3>My Orders</h3> */}
-              <p>No orders found. Start shopping now!</p>
+              <p>No Notification to show !!</p>
             </Card>
           </Tab.Pane>
         </Tab.Content>

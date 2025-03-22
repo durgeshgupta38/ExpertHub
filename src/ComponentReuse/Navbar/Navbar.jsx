@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../ContextApi/AuthContext";
 import LogoutButton from "../../Auth/Logout";
 import logo from "../../Assets/Images/logo.png";
@@ -11,7 +11,7 @@ const NavBar = () => {
   const { isAuthenticated, role } = useAuth();
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-
+  const navigate = useNavigate();
   // Handle Scroll for Sticky Navbar
   useEffect(() => {
     const scrollHandler = () => {
@@ -20,7 +20,9 @@ const NavBar = () => {
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
+  const handleMyAccount = () => {
 
+  }
   return (
     <Navbar fixed="top" expand="md" className={`navbar ${isFixed ? "fixed" : ""}`}>
       <Container>
@@ -41,11 +43,21 @@ const NavBar = () => {
             <Nav.Item>
               <Link className="nav-link" to="/" onClick={() => setExpand(false)}>Home</Link>
             </Nav.Item>
-            {isAuthenticated &&  
-            <Nav.Item>
-              <Link className="nav-link" to="/profile" onClick={() => setExpand(false)}>My Account</Link>
-            </Nav.Item>}
-           
+            {isAuthenticated &&<>
+              <Nav.Item>
+                <button
+                    className="nav-link" onClick={(e) => {
+                  e.preventDefault();
+                  setExpand(false);
+                  navigate("/profile?tab=account");
+                }}
+                >My Account</button>
+              </Nav.Item>
+                <Nav.Item>
+                <NotificationIcon count={9} />
+              </Nav.Item>
+              </> }
+
             {role === "admin" && (
               <Nav.Item>
                 <Link className="nav-link" to="/admin" onClick={() => setExpand(false)}>Admin Panel</Link>
@@ -53,9 +65,6 @@ const NavBar = () => {
             )}
             <Nav.Item>
               {isAuthenticated ? <LogoutButton /> : <Link className="nav-link" to="/login">Login</Link>}
-            </Nav.Item>
-            <Nav.Item>
-              <NotificationIcon count={9} />
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Card, ListGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./account.css";
 const EditAccount = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -101,7 +101,7 @@ const EditAccount = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="fullName" className="mt-2">
               <Form.Label>Full Name</Form.Label>
-              <Form.Control type="text" name="fullName" style={{ border: "1px solid #d4d4d4" }} value={formData.fullName} onChange={handleChange} required />
+              <Form.Control type="text" name="fullName" className="fullName" value={formData.fullName} onChange={handleChange} required />
             </Form.Group>
 
             <Form.Group controlId="email" className="mt-2">
@@ -150,7 +150,7 @@ const EditAccount = () => {
                   <Form.Control type="text" value={newAddress} onChange={(e) => setNewAddress(e.target.value)} placeholder="Add New Address" />
                 </Col>
                 <Col xs="auto">
-                  <Button variant="primary" onClick={handleAddOrUpdateAddress} style={{ padding: "2px 6px", fontSize: "14px", border: "1px solid #d4d4d4" }}>
+                  <Button variant="primary" onClick={handleAddOrUpdateAddress} className="addresstoggle">
                     {editingIndex !== null ? "Update Address" : "Add Address"}
                   </Button>
                 </Col>
@@ -162,17 +162,17 @@ const EditAccount = () => {
                 <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center mb-2">
                   {address} {index === formData.defaultAddress && <span className="text-success">(Default)</span>}
                   <div>
-                    <Button variant="warning" style={{ padding: "1px 4px", fontSize: "12px" }} onClick={() => handleEditAddress(index)}>Edit</Button>{" "}
-                    <Button variant="danger" style={{ padding: "1px 4px", fontSize: "12px" }} onClick={() => handleDeleteAddress(index)}>Delete</Button>{" "}
+                    <Button variant="warning" className="commonStyles" onClick={() => handleEditAddress(index)}>Edit</Button>{" "}
+                    <Button variant="danger"className="commonStyles" onClick={() => handleDeleteAddress(index)}>Delete</Button>{" "}
                     {index !== formData.defaultAddress && (
-                      <Button variant="success" style={{ padding: "1px 4px", fontSize: "12px" }} onClick={() => handleSetDefault(index)}>Set Default</Button>
+                      <Button variant="success"className="commonStyles" onClick={() => handleSetDefault(index)}>Set Default</Button>
                     )}
                   </div>
                 </ListGroup.Item>
               ))}
             </ListGroup>
             {/* Submit Button */}
-            <Button type="submit" variant="success" className="mt-3" style={{ padding: "3px 8px", fontSize: "14px" }}>
+            <Button type="submit" variant="success" className="mt-3 submittype">
               Submit
             </Button>
           </Form>
