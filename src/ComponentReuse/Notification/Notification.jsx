@@ -1,11 +1,12 @@
 import React from "react";
 import "./notification.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NotificationIcon = ({ count }) => {
+    const navigate = useNavigate();
     return (
         <>
-            <Link className="notification-container" to="/profile">
+            <button className="nav-link notification-container" onClick={() => navigate("/profile?tab=notification")}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -2 24 24"
@@ -18,8 +19,8 @@ const NotificationIcon = ({ count }) => {
                         clipRule="evenodd"
                     />
                 </svg>
-                {count > 0 && <span className="notification-badge">{count}+</span>}
-            </Link>
+                {count > 0 && <span className="notification-badge">{count}</span>}
+            </button>
         </>
     );
 };

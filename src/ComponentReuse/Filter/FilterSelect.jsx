@@ -3,7 +3,7 @@ import Select from "react-select";
 import { useDispatch } from "react-redux";
 import { filterCategory } from "../../Redux/Slices/categorySlice";
 import { serviceData } from '../../Utils/products';
-
+import "./filter.css";
 const groupedOptions = [
   {
     label: "Vehicle",
@@ -92,17 +92,8 @@ const CustomGroup = (props) => {
   return (
     <div>
       <div
+      className="filter"
         onClick={toggleVisibility}
-        style={{
-          fontWeight: "bold",
-          cursor: "pointer",
-          padding: "8px 12px",
-          backgroundColor: "#f0f0f0",
-          borderBottom: "1px solid #ddd",
-          display:"flex",
-          justifyContent:"space-between"
-
-        }}
       >
         <span>{data.label}</span>
         <span> {isOpen ? "▲" : "▼"}</span>

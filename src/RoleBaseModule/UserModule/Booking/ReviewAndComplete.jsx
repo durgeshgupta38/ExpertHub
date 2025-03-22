@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useWindowScrollToTop from "../../../CustomHook/useWindowScrollToTop";
-
+import "./booking.css"
 const ReviewAndComplete=()=>{
   useWindowScrollToTop()
 
@@ -12,7 +12,7 @@ const ReviewAndComplete=()=>{
     }
     return(
         <div className="container d-flex justify-content-center mt-4 mb-4">
-        <div className="card p-4" style={{ width: "50rem", backgroundColor: "#f8f9fa",border:"1px solid #d4d6d9" }}>
+        <div className="card p-4 reviewDetails">
           <h3 className="text-center mb-3">Please review your details</h3>
         <h6 className="mt-3 fw-bold">Name: </h6>Durgesh Gupta
         <h6 className="mt-3 fw-bold">PickUp Address: </h6>Delhi
@@ -27,9 +27,7 @@ const ReviewAndComplete=()=>{
         <h6 className="mt-3 fw-bold">Category: </h6>Mechanic
         <h6 className="mt-3 fw-bold">Agent:</h6> john Dey
         <h6 className="mt-3 fw-bold">Service:</h6> Car review by experts
-        {/* <div className="w-100 mb-3 overflow-auto d-flex gap-2" style={{ whiteSpace: "nowrap" }}> */}
               <button
-                // key={method}
                 className="btn btn-outline-primary"
                 onClick={() => handleComplete()}
               >
@@ -37,7 +35,6 @@ const ReviewAndComplete=()=>{
               </button>
           </div>
         </div>
-    //   </div>
     )
 }
 export default ReviewAndComplete

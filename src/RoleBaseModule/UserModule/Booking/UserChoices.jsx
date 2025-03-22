@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./booking.css"
 const BookingForm = () => {
   const [formData, setFormData] = useState({
     pickupTime: "",
@@ -38,7 +38,7 @@ const BookingForm = () => {
   };
   return (
     <div className="container mt-4">
-      <div className="p-4" style={{ margin: "auto" }}>
+      <div className="p-4 formClass">
         <form onSubmit={handleSubmit}>
           {/* Pickup Date & Time */}
           <div className="row">

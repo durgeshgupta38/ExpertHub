@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./payment.css";
 const PaymentOptions = () => {
   const [selectedMethod, setSelectedMethod] = useState("netbanking");
   const [selectedBank, setSelectedBank] = useState("");
@@ -17,11 +17,11 @@ const PaymentOptions = () => {
   const otherBanks = ["Punjab National Bank", "Bank of Baroda", "Yes Bank"];
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4" style={{ width: "50rem", backgroundColor: "#f8f9fa",border:"1px solid #d4d6d9" }}>
+    <div className="container paymentCont d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4 paymentCard">
         <h3 className="text-center mb-3">Select Payment Method</h3>
         {/* Payment Selection Tabs */}
- <div className="w-100 mb-3 overflow-auto d-flex gap-2" style={{ whiteSpace: "nowrap" }}>
+ <div className="w-100 mb-3 overflow-auto d-flex gap-2 bankings">
           {["netbanking", "card", "Cash on Delivery", "UPI"].map((method) => (
             <button
               key={method}
@@ -137,9 +137,8 @@ const PaymentOptions = () => {
        <i className="fas fa-sync-alt refresh-icon mb-1" onClick={()=>alert("kkk")}></i>
       <input
         type="text"
-        className="form-control text-center"
+        className="form-control text-center maxWidth"
         placeholder="Enter the characters"
-        style={{ maxWidth: "200px" }}
       />
       <button className="btn btn-success w-50 mt-3">CONFIRM ORDER</button>
     </div>

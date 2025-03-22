@@ -1,0 +1,15 @@
+.progress{
+ height: 6px;
+}
+
+.imgreview{
+    width: 45px; 
+    height: 45px
+}
+.formCont{
+    border: 1px solid #d4d5d6;
+}
+.agentList{
+background-color: #f8f9fa;
+border:1px solid #d4d6d9;
+}

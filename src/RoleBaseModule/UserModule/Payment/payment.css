@@ -1,0 +1,14 @@
+.paymentCont{
+    min-height: 100vh;
+}
+.paymentCard{
+    width: 50rem;
+     background-color: #f8f9fa;
+     border: 1px solid #d4d6d9
+}
+.bankings{
+    white-space: nowrap
+}
+.maxWidth{
+     max-width: 200px;
+}

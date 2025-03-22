@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom";
-
+// import "./login.css";
 import LoginWithOTP from "./LoginWithOTP";
 import LoginWithEmail from "./LoginWithEmail";
 import LoginWithGoogle from "./LoginWithGoogle";
@@ -19,7 +19,7 @@ const Login = () => {
 
     return (
         <>
-            <div className="container">
+            <div className="container loginCont mt-4">
                 <div className="login-container">
                     {otp && <LoginWithOTP />}
                     {!otp && !google && <LoginWithEmail />}
