@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -35,7 +36,7 @@ const ForgotPassword = () => {
           </Button>
         </Form>
         <div className="text-center mt-3">
-          <a href="/login" className="small">Back to Login</a>
+          <Link to="/login" className="small">Back to Login</Link>
         </div>
       </Card>
     </Container>

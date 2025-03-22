@@ -55,11 +55,11 @@ const CategoryList = () => {
             </div>
           ) : (
             <Row>
-              {count.map((val) => (
-                <Col md={3} sm={6} xs={12} className="feature p-3 mb-3 text-center" key={val.id} style={{ backgroundColor: val.bg }}>
+              {count.map((val,index) => (
+                <Col md={3} sm={6} xs={12} className="feature p-3 mb-3 text-center" key={index} style={{ backgroundColor: val.bg }}>
                   <div className="icon">{val.icon}</div>
                   <h5>{val.title}</h5>
-                  <button className="btn btn-primary btn-sm mt-2" onClick={()=>navigate(`/experts/${val.id}`)}>
+                  <button className="customButtonColor btn-sm mt-2" onClick={()=>navigate(`/experts/${val.id}`)}>
                     {val.subtitle}
                   </button>
                 </Col>
