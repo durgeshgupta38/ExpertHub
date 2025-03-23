@@ -51,7 +51,10 @@ const NavBar = () => {
                   setExpand(false);
                   navigate("/profile?tab=account");
                 }}
-                >My Account</button>
+                >Account</button>
+              </Nav.Item>
+              <Nav.Item>
+              <Link className="nav-link" to="/profile?tab=myBooking" onClick={() => setExpand(false)}>Bookings</Link>
               </Nav.Item>
                 <Nav.Item>
                 <NotificationIcon count={9} />

@@ -103,11 +103,15 @@ const CustomGroup = (props) => {
   );
 };
 
-const FilterSelect = () => {
+const FilterSelect = ({catAndSubCat}) => {
   const dispatch = useDispatch();
 
   const handleChange = (selectedOption) => {
-    if (!selectedOption) return;
+
+    if (!selectedOption) {
+      catAndSubCat({ cat: "", subCat: "" });
+      return;
+    }
 
     console.log(selectedOption,"selectedOption")
     const parentLabel = groupedOptions.find((group) =>{
@@ -118,7 +122,7 @@ const FilterSelect = () => {
             return group.value === selectedOption.value
     } 
     )?.label;
-
+    catAndSubCat({cat:parentLabel,subCat:selectedOption.label})
     console.log("Selected option belongs to:", parentLabel);
 
     const searchData = serviceData.filter(
