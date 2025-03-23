@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row, Pagination, Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FilterSelect from "../../../ComponentReuse/Filter/FilterSelect";
 import SearchBar from "../../../ComponentReuse/SeachBar/SearchBar";
 import { useSelector } from "react-redux";
+import "./style.css"
+import WhatsApp from "../../../Assets/Images/WhatsApp.svg"
+import writeus from "../../../Assets/Images/fi-rr-comment-alt.svg"
 
 const CategoryList = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [categoryType,setCategoryType]=useState({cat:"",subCat:""})
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const itemsPerPage = 10;
-  const count = useSelector((state) =>state?.category?.categoryList)
+  const count = useSelector((state) => state?.category?.categoryList)
   // Fetch data from API
   const fetchServices = async (page) => {
     setLoading(true);
@@ -31,17 +37,31 @@ const CategoryList = () => {
   useEffect(() => {
     fetchServices(currentPage);
   }, [currentPage]);
+  const handleCallback = () => {
+    alert("You will shortly receive a call from our customer executive")
+  }
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    alert(`Query submitted: ${query}`);
+    setQuery(""); // Clear input field
+    setShowForm(false); // Hide form after submission
+  };
 
   return (
     <Container>
       <section className="filter-bar">
         <Container className="filter-bar-container">
           <Row className="justify-content-center">
-            <Col md={4}>
-              <FilterSelect />
-            </Col>
+          <Col md={4}>
+  <FilterSelect catAndSubCat={setCategoryType} />
+  {categoryType.cat && (
+    <div className="selected-category mt-2">
+      <strong>Selected: </strong> {categoryType.cat} {categoryType.subCat && `> ${categoryType.subCat}`}
+    </div>
+  )}
+</Col>
             <Col md={8}>
-              <SearchBar />
+              <SearchBar/>
             </Col>
           </Row>
         </Container>
@@ -49,17 +69,17 @@ const CategoryList = () => {
         {/* Services List */}
         <Container className="mt-4">
           {loading ? (
-            <div className="text-center">
-              <Spinner animation="border" />
-              <p>Loading Categories...</p>
+            <div className="text-center spinner">
+              <Spinner animation="border" variant="warning"  as="span"/>
+              <span className="ms-2 load">Loading Categories...</span>
             </div>
           ) : (
             <Row>
-              {count.map((val,index) => (
+              {count.map((val, index) => (
                 <Col md={3} sm={6} xs={12} className="feature p-3 mb-3 text-center" key={index} style={{ backgroundColor: val.bg }}>
                   <div className="icon">{val.icon}</div>
                   <h5>{val.title}</h5>
-                  <button className="customButtonColor btn-sm mt-2" onClick={()=>navigate(`/experts/${val.id}`)}>
+                  <button className="customButtonColor btn-sm mt-2" onClick={() => navigate(`/experts/${val.id}`)}>
                     {val.subtitle}
                   </button>
                 </Col>
@@ -80,6 +100,95 @@ const CategoryList = () => {
             <Pagination.Next disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)} />
           </Pagination>
         </Container>
+        {/* <div className="mt-4">
+          <h5>Didn't find what you were looking for?</h5>
+
+          <p className="mt-0 mb-0">
+            Call us at +918787882984 Or {" "}
+            <span
+              className="text-primary cursor-pointer no-underline "
+              onClick={() => setShowForm(true)}
+            >
+              write us <img src={writeus} alt="Message Icon" width="18" height="18" className="ms-1" />
+            </span>
+          </p>
+          <p className="mt-0 mb-0">
+            Or WhatsApp us directly (click on the Icon)
+            <a
+              href="https://wa.me/918787882984"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img className="whatsapp" src={WhatsApp} alt="WhatsApp" width="26" height="26" />
+            </a>
+            +918787882984
+          </p>
+          <p className="mt-0">Or <Link onClick={handleCallback} className="no-underline">Request a Callback</Link>, and our executive will contact you soon to assist with your query.</p>
+          {showForm && (
+            <form onSubmit={handleFormSubmit} className="mt-3">
+              <textarea
+                className="form-control"
+                rows="3"
+                placeholder="Write your query here..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                required
+              />
+              <button type="submit" className="btn btn-primary mt-2">
+                Send
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary mt-2 ms-2"
+                onClick={() => setShowForm(false)}
+              >
+                Cancel
+              </button>
+            </form>
+          )}
+        </div> */}
+        <div className="mt-4">
+  <h5>Didn't find the Service(s) you are looking for?</h5>
+
+  <p className="mt-0 mb-0">
+    Call us at +918787882984 Or {" "}
+    <span
+      className="text-primary cursor-pointer no-underline"
+      onClick={() => setShowForm(true)}
+    >
+      write to us 
+      <img src={writeus} alt="Message Icon" width="18" height="18" className="ms-1" />
+    </span>
+  </p>
+
+  <p className="mt-0 mb-0">
+    Or contact us on WhatsApp us(click on the Icon)
+    <a href="https://wa.me/918787882984" target="_blank" rel="noopener noreferrer">
+      <img className="whatsapp ms-1" src={WhatsApp} alt="WhatsApp" width="26" height="26" />
+    </a> 
+    +918787882984
+  </p>
+
+  <p className="mt-0">
+    Or <Link onClick={handleCallback} className="no-underline">request a callback</Link>, and our team will reach out to assist you.
+  </p>
+
+  {showForm && (
+    <form onSubmit={handleFormSubmit} className="mt-3">
+      <textarea
+        className="form-control"
+        rows="3"
+        placeholder="Write your query here..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        required
+      />
+      <button type="submit" className="btn btn-primary mt-2">Send</button>
+      <button type="button" className="btn btn-secondary mt-2 ms-2" onClick={() => setShowForm(false)}>Cancel</button>
+    </form>
+  )}
+</div>
+
       </section>
     </Container>
   );
