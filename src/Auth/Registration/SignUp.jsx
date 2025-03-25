@@ -7,7 +7,7 @@ import { signUpUser } from "../../Redux/Slices/userSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
 const SignUp = () => {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const { loading, error } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
@@ -58,22 +58,22 @@ const SignUp = () => {
             return
         }
         const { confirmPassword, ...userData } = formData;
-   try {
+        try {
             const result = await dispatch(signUpUser(userData)).unwrap(); // 1st and 6th unwrap the response
             console.log(result, "Signup Response");
             navigate("/login");
-                  CommonToast("success","SignUp successful!")
-            setFormData({name: "",email: "",password: "",confirmPassword: "",mobile: ""});
+            CommonToast("success", "SignUp successful!")
+            setFormData({ name: "", email: "", password: "", confirmPassword: "", mobile: "" });
             setErrors({});
         } catch (error) {
             console.error("Signup Error:", error);
-            CommonToast("error",error|| "Signup failed. Please try again.")
+            CommonToast("error", error || "Signup failed. Please try again.")
         }
     };
 
     return (
         <div className="container">
-            
+
             <div className="signup-container">
                 <h3 className="text-center">Sign Up</h3>
                 <form onSubmit={handleSubmit}>
@@ -107,7 +107,7 @@ const SignUp = () => {
                         {errors.mobile && <p className="text-danger">{errors.mobile}</p>}
                     </div>
 
-                    <button type="submit" className="btn btn-primary w-100" disabled={loading}>{loading ?<CommonSpinner size="sm"/>:"Sign Up"}</button>
+                    <button type="submit" className="btn btn-primary w-100" disabled={loading}>{loading ? <CommonSpinner size="sm" /> : "Sign Up"}</button>
                 </form>
                 <p className="text-center mt-3">Already have an account? <Link to="/login">Login</Link></p>
             </div>

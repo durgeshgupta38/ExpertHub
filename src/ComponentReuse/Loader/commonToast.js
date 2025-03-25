@@ -11,7 +11,7 @@ export const CommonToast=(type,message)=>{
         theme: "colored",
         transition: Zoom,
       });
-      if(type=="error") return toast.danger(message, {
+      if(type=="error") return toast.error(message, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,

@@ -76,7 +76,7 @@ const TabBar = () => {
                 </Col>
               </Row>
               <Row>
-                <Col md={9} className="mt-6">
+                <Col md={9} className="mt-6 profilegap">
                   <h3>Durgesh Gupta</h3>
                   <p>
                     <strong>Email:</strong> durgeshgupta38@gmail.com
