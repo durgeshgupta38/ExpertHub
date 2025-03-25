@@ -10,7 +10,7 @@ import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
 const LoginWithEmail = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { loading, error,isLoggedIn } = useSelector((state) => state.user);
+    const { loading, error, isLoggedIn } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -40,8 +40,8 @@ const LoginWithEmail = () => {
             return
         }
         let newformData = {
-            username:formData.email ,
-            password:formData.password
+            username: formData.email,
+            password: formData.password
         }
 
         try {
@@ -52,14 +52,14 @@ const LoginWithEmail = () => {
             if (result.user.role === "admin") navigate("/admin");
             if (result.user.role === "user") navigate("/");
             if (result.user.role === "agent") navigate("/agent");
-            CommonToast("success","Login successful!")
+            CommonToast("success", "Login successful!")
 
             // 🔹 Reset Form
             setFormData({ email: "", password: "" });
             setErrors({});
         } catch (error) {
             console.error("Login Error:", error);
-            CommonToast("error",error || "Login failed. Please try again.")
+            CommonToast("error", error || "Login failed. Please try again.")
         }
     }
 

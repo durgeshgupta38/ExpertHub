@@ -88,8 +88,6 @@ const userSlice = createSlice({
         localStorage.setItem("roles",action.payload.user.role);
         localStorage.setItem("accessToken", action.payload.accessToken);
         localStorage.setItem("isLoggedIn", true);
-
-
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -114,7 +112,6 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
     })
-
   },
 });
 

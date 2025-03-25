@@ -1,6 +1,3 @@
-// import { store } from "../../Redux/Store/store";
-// import { logoutUser } from "../../Redux/Slices/userSlice"; // Logout action
-
 const BASE_URL = "https://d-main-power.onrender.com/api/v1/";
 
 export const apiRequest = async (endpoint, method = "GET", body = null, headers = {}, isFormData = false, requiresAuth = true) => { //4th
@@ -56,11 +53,16 @@ export const refreshAccessToken = async () => {
       method: "POST",
       credentials: "include", // Required for HTTP-only cookie handling
     });
+    if (!response.ok) {
+      throw new Error("Failed to refresh token");
+    }
 
     const data = await response.json();
-    if (data.success) {
+    if (data.success && data.accessToken) {
       localStorage.setItem("accessToken", data.accessToken);
       return data.accessToken;
+    }else {
+      throw new Error(data.message || "Could not refresh token");
     }
   } catch (error) {
     console.error("Failed to refresh token:", error);
