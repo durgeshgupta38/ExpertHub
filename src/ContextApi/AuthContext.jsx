@@ -5,25 +5,27 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-    return token ? { isAuthenticated: true, role } : { isAuthenticated: false, role: null };
+    const accessToken = localStorage.getItem("accessToken");
+let isLoggedIn=localStorage.getItem("isLoggedIn")
+
+    const role = localStorage.getItem("roles");
+    return accessToken ? { isLoggedIn: true, role } : { isLoggedIn: false, role: null };
   });
 
-  const login = (token, role) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("role", role);
-    setAuth({ isAuthenticated: true, role });
-  };
+//   const login = (token, role) => {
+//     localStorage.setItem("token", token);
+//     localStorage.setItem("role", role);
+//     setAuth({ isLoggedIn: true, role });
+//   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    setAuth({ isAuthenticated: false, role: null });
-  };
+//   const logout = () => {
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("role");
+//     setAuth({ isLoggedIn: false, role: null });
+//   };
 
   return (
-    <AuthContext.Provider value={{ ...auth, login, logout }}>
+    <AuthContext.Provider value={{ ...auth}}>
       {children}
     </AuthContext.Provider>
   );

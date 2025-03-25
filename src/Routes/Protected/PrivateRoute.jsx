@@ -1,12 +1,21 @@
 import { Outlet,Navigate } from "react-router-dom";
 import { useAuth } from "../../ContextApi/AuthContext"; // Import auth context
-import { toast } from "react-toastify";
+import { toast, Zoom } from "react-toastify";
+import { useEffect, useRef } from "react";
+import {CommonToast} from "../../ComponentReuse/Loader/commonToast";
 
 const PrivateRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  !isAuthenticated && toast.info("Please login to book a service");
+let isLoggedIn=localStorage.getItem("isLoggedIn")
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+const toastShown = useRef(false);
+  useEffect(() => {
+    if (!isLoggedIn && !toastShown.current) {
+      CommonToast("warning","Please login to book Service(s)")
+      toastShown.current = true;
+    }
+  }, [isLoggedIn]);
+
+  return isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

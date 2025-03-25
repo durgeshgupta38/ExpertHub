@@ -4,13 +4,14 @@ import { Breadcrumb, Container, Navbar } from "react-bootstrap";
 import "./breadcum.css"
 import { useAuth } from "../../ContextApi/AuthContext";
 const Breadcrumbs = () => {
-    const { isAuthenticated } = useAuth();
+let isLoggedIn=localStorage.getItem("isLoggedIn")
+
 
     const location = useLocation();
     const pathnames = location.pathname.split("/").filter((x) => x);
 
     return (<>
-        {isAuthenticated &&
+        {isLoggedIn &&
 
             <Breadcrumb >
                 <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }} >

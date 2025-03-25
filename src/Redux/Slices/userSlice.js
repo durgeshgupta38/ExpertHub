@@ -46,7 +46,7 @@ export const logoutUser = createAsyncThunk("user/logout", async (_, { rejectWith
 
 const initialState = {
   user: null,
-  isLoggedIn:false,
+  isLoggedIn:!!localStorage.getItem("accessToken"),
   isAuthenticated: !!localStorage.getItem("accessToken"), // Check token presence
   loading: false,
   error: null,
