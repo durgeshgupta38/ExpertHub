@@ -69,67 +69,6 @@ const routes = [
 
 export default routes;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import { lazy, Suspense } from "react";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-// import { useAuth } from "../../ContextApi/AuthContext";
-// import LogoutButton from "../../Auth/Logout";
 import logo from "../../Assets/Images/logo.png";
 import "./navbar.css";
 import NotificationIcon from "../Notification/Notification";
 import { useDispatch, useSelector } from "react-redux";
-import { toast, Zoom } from "react-toastify";
 import { logoutUser } from "../../Redux/Slices/userSlice";
+import { CommonToast } from "../Loader/commonToast";
 
 const NavBar = () => {
-  // const { role } = useAuth();
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-let isLoggedIn=localStorage.getItem("isLoggedIn")==="true"
+let isLoggedIn=localStorage.getItem("isLoggedIn")
 let role=localStorage.getItem("roles");
 
 const dispatch = useDispatch();
@@ -34,28 +31,11 @@ const dispatch = useDispatch();
       const result = await dispatch(logoutUser()).unwrap();
       console.log(result, "logout Response");
       navigate("/login");
-      toast.success("Logout successful!", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-          transition: Zoom,
-      });
+      CommonToast("success","Logout successful!")
+    
   } catch (error) {
       console.error("Logout Error:", error);
-      toast.error(error || "Logout failed. Please try again.", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-          transition: Zoom,
-      });
+      CommonToast("error",error || "Logout failed. Please try again.")
   }
   }
   return (

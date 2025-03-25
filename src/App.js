@@ -4,14 +4,14 @@ import { ToastContainer, Zoom } from "react-toastify";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import NavBar from "./ComponentReuse/Navbar/Navbar";
 import Breadcrumbs from "./ComponentReuse/Breadcrumb/Breadcum";
-import { AuthProvider } from "./ContextApi/AuthContext";
+// import { AuthProvider } from "./ContextApi/AuthContext";
 import Footer from "./ComponentReuse/Footer/Footer";
 import routes from "./Routes/routesConfig";
 import Loader from "./ComponentReuse/Loader/Loader";
 function App() {
   // useAutoLogout();
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <Router>
         <ToastContainer
           position="top-right"
@@ -50,7 +50,7 @@ function App() {
         </Suspense>
         <Footer />
       </Router>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }
 

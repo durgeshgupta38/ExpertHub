@@ -4,8 +4,8 @@ import "./Signup.css"
 import CommonSpinner from "../../ComponentReuse/Loader/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../../Redux/Slices/userSlice";
-import { toast, Zoom  } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
 const SignUp = () => {
     const navigate=useNavigate()
     const dispatch = useDispatch();
@@ -62,53 +62,13 @@ const SignUp = () => {
             const result = await dispatch(signUpUser(userData)).unwrap(); // 1st and 6th unwrap the response
             console.log(result, "Signup Response");
             navigate("/login");
-            toast.success("SignUp successful!", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-                transition: Zoom,
-            });
-
-            // 🔹 Reset Form
+                  CommonToast("success","SignUp successful!")
             setFormData({name: "",email: "",password: "",confirmPassword: "",mobile: ""});
             setErrors({});
         } catch (error) {
             console.error("Signup Error:", error);
-            toast.error(error || "Signup failed. Please try again.", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-                transition: Zoom,
-            });
+            CommonToast("error",error|| "Signup failed. Please try again.")
         }
-
-        // dispatch(signUpUser(userData)).then((result) => {
-        //     if (result.meta.requestStatus === "fulfilled") {
-        //         navigate("/login");
-        //     }
-        //     if (result.meta.requestStatus === "rejected") {
-        //         toast.error(error, {
-        //             position: "top-right",
-        //             autoClose: 5000,
-        //             hideProgressBar: false,
-        //             closeOnClick: false,
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             progress: undefined,
-        //             theme: "colored",
-        //             transition: Zoom,
-        //             });
-        //     }
-        // });
-        // setFormData({name: "",email: "",password: "",confirmPassword: "",mobile: ""});
     };
 
     return (

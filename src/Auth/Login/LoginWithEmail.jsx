@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { useAuth } from "../../ContextApi/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../Registration/Signup.css"
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Redux/Slices/userSlice";
 import CommonSpinner from "../../ComponentReuse/Loader/Spinner";
-import { toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
 
 const LoginWithEmail = () => {
-    const { login } = useAuth();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { loading, error,isLoggedIn } = useSelector((state) => state.user);
@@ -54,61 +52,15 @@ const LoginWithEmail = () => {
             if (result.user.role === "admin") navigate("/admin");
             if (result.user.role === "user") navigate("/");
             if (result.user.role === "agent") navigate("/agent");
-
-            // 🔹 Show Success Toast
-            toast.success("Login successful!", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-                transition: Zoom,
-            });
+            CommonToast("success","Login successful!")
 
             // 🔹 Reset Form
             setFormData({ email: "", password: "" });
             setErrors({});
         } catch (error) {
             console.error("Login Error:", error);
-
-            // 🔹 Show Error Toast
-            toast.error(error || "Login failed. Please try again.", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-                transition: Zoom,
-            });
+            CommonToast("error",error || "Login failed. Please try again.")
         }
-
-        // dispatch(loginUser(newformData)).then((result) => {
-        //     console.log(result,"ressss")
-        //     if (result.meta.requestStatus === "fulfilled") {
-        //         if (result.payload.user.role === "admin") navigate("/admin");
-        //         if (result.payload.user.role === "user") navigate("/");
-        //         if (result.payload.user.role === "agent") navigate("/agent");
-        //     }
-        //     if (result.meta.requestStatus === "rejected") {
-        //         toast.error(error, {
-        //             position: "top-right",
-        //             autoClose: 5000,
-        //             hideProgressBar: false,
-        //             closeOnClick: false,
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             progress: undefined,
-        //             theme: "colored",
-        //             transition: Zoom,
-        //         });
-        //     }
-        // });
-        // setFormData({ name: "", email: "", password: "", confirmPassword: "", mobile: "" });
-
     }
 
     return (

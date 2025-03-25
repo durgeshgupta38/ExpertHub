@@ -1,10 +1,10 @@
 import { Navigate,Outlet } from "react-router-dom";
-import { useAuth } from "../../ContextApi/AuthContext"
-
 const RoleBasedRoute = ({ allowedRoles }) => {
-  const { isAuthenticated, role } = useAuth();
+let isLoggedIn=localStorage.getItem("isLoggedIn")
+let role=localStorage.getItem("roles");
 
-  if (!isAuthenticated) return <Navigate to="/login" />;
+
+  if (!isLoggedIn) return <Navigate to="/login" />;
   if (!allowedRoles.includes(role)) return <Navigate to="/unauthorized" />;
 
   return <Outlet />;
