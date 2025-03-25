@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../ContextApi/AuthContext";
-import LogoutButton from "../../Auth/Logout";
+// import { useAuth } from "../../ContextApi/AuthContext";
+// import LogoutButton from "../../Auth/Logout";
 import logo from "../../Assets/Images/logo.png";
 import "./navbar.css";
 import NotificationIcon from "../Notification/Notification";
+import { useDispatch, useSelector } from "react-redux";
+import { toast, Zoom } from "react-toastify";
+import { logoutUser } from "../../Redux/Slices/userSlice";
 
 const NavBar = () => {
-  const { isAuthenticated, role } = useAuth();
+  // const { role } = useAuth();
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
+let isLoggedIn=localStorage.getItem("isLoggedIn")==="true"
+let role=localStorage.getItem("roles");
+
+const dispatch = useDispatch();
   const navigate = useNavigate();
   // Handle Scroll for Sticky Navbar
   useEffect(() => {
@@ -20,8 +27,36 @@ const NavBar = () => {
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
-  const handleMyAccount = () => {
 
+  const handleLogout = async() => {
+    let accessToken=localStorage.getItem("accessToken")
+    try {
+      const result = await dispatch(logoutUser()).unwrap();
+      console.log(result, "logout Response");
+      navigate("/login");
+      toast.success("Logout successful!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+          transition: Zoom,
+      });
+  } catch (error) {
+      console.error("Logout Error:", error);
+      toast.error(error || "Logout failed. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+          transition: Zoom,
+      });
+  }
   }
   return (
     <Navbar fixed="top" expand="md" className={`navbar ${isFixed ? "fixed" : ""}`}>
@@ -43,7 +78,8 @@ const NavBar = () => {
             <Nav.Item>
               <Link className="nav-link" to="/" onClick={() => setExpand(false)}>Home</Link>
             </Nav.Item>
-            {isAuthenticated &&<>
+
+            {isLoggedIn && role=="user" &&<>
               <Nav.Item>
                 <button
                     className="nav-link" onClick={(e) => {
@@ -61,13 +97,13 @@ const NavBar = () => {
               </Nav.Item>
               </> }
 
-            {role === "admin" && (
+            {isLoggedIn && role === "admin" && (
               <Nav.Item>
                 <Link className="nav-link" to="/admin" onClick={() => setExpand(false)}>Admin Panel</Link>
               </Nav.Item>
             )}
             <Nav.Item>
-              {isAuthenticated ? <LogoutButton /> : <Link className="nav-link" to="/login">Login</Link>}
+              {isLoggedIn ? <Link className="nav-link" to="/login" onClick={handleLogout}>Logout</Link> : <Link className="nav-link" to="/login">Login</Link>}
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>

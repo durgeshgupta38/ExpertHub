@@ -9,3 +9,12 @@
     justify-content: center;
     align-items: center;
 }
+.spinner{
+    display: inline-flex;
+  }
+  .load{
+    margin-top: 5px;
+  }
+  .spin{
+    margin-top: -4px;
+  }

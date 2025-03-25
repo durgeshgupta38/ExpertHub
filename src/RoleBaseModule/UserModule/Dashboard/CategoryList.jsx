@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row, Pagination, Spinner } from "react-bootstrap";
+import { Col, Container, Row, Pagination } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import FilterSelect from "../../../ComponentReuse/Filter/FilterSelect";
 import SearchBar from "../../../ComponentReuse/SeachBar/SearchBar";
@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import "./style.css"
 import WhatsApp from "../../../Assets/Images/WhatsApp.svg"
 import writeus from "../../../Assets/Images/fi-rr-comment-alt.svg"
+import CommonSpinner from "../../../ComponentReuse/Loader/Spinner";
+import { serviceData } from "../../../Utils/products";
 
 const CategoryList = () => {
   const [showForm, setShowForm] = useState(false);
@@ -69,13 +71,10 @@ const CategoryList = () => {
         {/* Services List */}
         <Container className="mt-4">
           {loading ? (
-            <div className="text-center spinner">
-              <Spinner animation="border" variant="warning"  as="span"/>
-              <span className="ms-2 load">Loading Categories...</span>
-            </div>
+             <CommonSpinner/> 
           ) : (
             <Row>
-              {count.map((val, index) => (
+              {serviceData.map((val, index) => (
                 <Col md={3} sm={6} xs={12} className="feature p-3 mb-3 text-center" key={index} style={{ backgroundColor: val.bg }}>
                   <div className="icon">{val.icon}</div>
                   <h5>{val.title}</h5>
@@ -100,53 +99,7 @@ const CategoryList = () => {
             <Pagination.Next disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)} />
           </Pagination>
         </Container>
-        {/* <div className="mt-4">
-          <h5>Didn't find what you were looking for?</h5>
 
-          <p className="mt-0 mb-0">
-            Call us at +918787882984 Or {" "}
-            <span
-              className="text-primary cursor-pointer no-underline "
-              onClick={() => setShowForm(true)}
-            >
-              write us <img src={writeus} alt="Message Icon" width="18" height="18" className="ms-1" />
-            </span>
-          </p>
-          <p className="mt-0 mb-0">
-            Or WhatsApp us directly (click on the Icon)
-            <a
-              href="https://wa.me/918787882984"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img className="whatsapp" src={WhatsApp} alt="WhatsApp" width="26" height="26" />
-            </a>
-            +918787882984
-          </p>
-          <p className="mt-0">Or <Link onClick={handleCallback} className="no-underline">Request a Callback</Link>, and our executive will contact you soon to assist with your query.</p>
-          {showForm && (
-            <form onSubmit={handleFormSubmit} className="mt-3">
-              <textarea
-                className="form-control"
-                rows="3"
-                placeholder="Write your query here..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                required
-              />
-              <button type="submit" className="btn btn-primary mt-2">
-                Send
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary mt-2 ms-2"
-                onClick={() => setShowForm(false)}
-              >
-                Cancel
-              </button>
-            </form>
-          )}
-        </div> */}
         <div className="mt-4">
   <h5>Didn't find the Service(s) you are looking for?</h5>
 

@@ -3,7 +3,7 @@ import "./searchbar.css";
 // import { products } from "../../utils/products";
 import { useDispatch } from "react-redux";
 import { serviceData } from "../../Utils/products";
-import { filterCategory } from "../../Redux/Slices/categorySlice";
+// import { filterCategory } from "../../Redux/Slices/categorySlice";
 
 // import useDebounce from "../../hooks/useDebounce";
 const SearchBar = () => {
@@ -12,7 +12,7 @@ const SearchBar = () => {
   const handelChange = (input) => {
     
     const searchData=serviceData.filter((item) =>item.title.toLowerCase().includes(input.target.value?.toLowerCase()))
-    dispatch(filterCategory({ searchData: searchData}));
+    // dispatch(filterCategory({ searchData: searchData}));
 
   };
   return (

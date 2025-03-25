@@ -1,13 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Suspense } from "react";
-import { ToastContainer } from "react-bootstrap";
+import { ToastContainer, Zoom } from "react-toastify";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import NavBar from "./ComponentReuse/Navbar/Navbar";
 import Breadcrumbs from "./ComponentReuse/Breadcrumb/Breadcum";
-import {AuthProvider }from "./ContextApi/AuthContext";
-import Footer from "./ComponentReuse/Footer/Footer"; 
+import { AuthProvider } from "./ContextApi/AuthContext";
+import Footer from "./ComponentReuse/Footer/Footer";
 import routes from "./Routes/routesConfig";
-import Loader from "./ComponentReuse/Loader/Loader"; 
+import Loader from "./ComponentReuse/Loader/Loader";
 function App() {
   // useAutoLogout();
   return (
@@ -15,21 +15,23 @@ function App() {
       <Router>
         <ToastContainer
           position="top-right"
-          autoClose={1500}
+          autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}
-          closeOnClick
+          closeOnClick={false}
+          rtl={false}
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="light"
+          theme="colored"
+          transition={Zoom}
         />
-     {/* <AutoLogout/> */}
+        {/* <AutoLogout/> */}
         <NavBar />
-        <Breadcrumbs/>
-     
+        <Breadcrumbs />
+
         <Suspense fallback={<Loader />}>
-        
+
           <Routes>
             {routes.map(({ path, element, children }, index) => (
               <Route key={index} path={path} element={element}>

@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  categorySlice  from "../Slices/categorySlice";
+import { thunk } from "redux-thunk"; 
+
+// import  categorySlice  from "../Slices/categorySlice";
+import  userSlice  from "../Slices/userSlice";
 
 export const store = configureStore({
   reducer: {
-    category:categorySlice,
+    // category:categorySlice,
+    user: userSlice,
   },
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-  //   serializableCheck: false
-  // }),
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware().concat(categoryMiddleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
