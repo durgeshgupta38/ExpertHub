@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import { useDispatch } from "react-redux";
-import { filterCategory } from "../../Redux/Slices/categorySlice";
+// import { filterCategory } from "../../Redux/Slices/categorySlice";
 import { serviceData } from '../../Utils/products';
 import "./filter.css";
 const groupedOptions = [
@@ -128,7 +128,7 @@ const FilterSelect = ({catAndSubCat}) => {
     const searchData = serviceData.filter(
       (item) => item.title.toLowerCase() === selectedOption.value.toLowerCase()
     );
-    dispatch(filterCategory({ searchData }));
+    // dispatch(filterCategory({ searchData }));
   };
 
   return (

@@ -1,9 +1,15 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
-import { apiRequest } from "../../ApiServices/CommonApi/api";
 import "./Signup.css"
+import CommonSpinner from "../../ComponentReuse/Loader/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser } from "../../Redux/Slices/userSlice";
+import { toast, Zoom  } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const SignUp = () => {
     const navigate=useNavigate()
+    const dispatch = useDispatch();
+    const { loading, error } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -11,7 +17,6 @@ const SignUp = () => {
         confirmPassword: "",
         mobile: ""
     });
-
     const [errors, setErrors] = useState({});
 
     const validateForm = () => {
@@ -34,9 +39,9 @@ const SignUp = () => {
         if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = "Passwords do not match.";
         }
-        const phoneRegex = /^[0-9]{10}$/;
+        const phoneRegex = /^(?:\+91)?[0-9]{10}$/;
         if (!phoneRegex.test(formData.mobile)) {
-            newErrors.mobile = "Mobile number must be exactly 10 digits and contain only numbers.";
+            newErrors.mobile = "Enter a valid 10-digit mobile number (with or without +91).";
         }
 
         setErrors(newErrors);
@@ -50,25 +55,65 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
-            console.log("Validation errors:", errors);
             return
         }
+        const { confirmPassword, ...userData } = formData;
+   try {
+            const result = await dispatch(signUpUser(userData)).unwrap(); // 1st and 6th unwrap the response
+            console.log(result, "Signup Response");
+            navigate("/login");
+            toast.success("SignUp successful!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+                transition: Zoom,
+            });
 
-        try {
-            const { confirmPassword, ...userData } = formData;
-            const response = await apiRequest("users/register", "POST", userData);
-            if(response.success){
-                navigate("/login")
-            }else {
-                alert("Signup failed: " + response.message);
-            }
+            // 🔹 Reset Form
+            setFormData({name: "",email: "",password: "",confirmPassword: "",mobile: ""});
+            setErrors({});
         } catch (error) {
-            alert("Error: " + error.message);
+            console.error("Signup Error:", error);
+            toast.error(error || "Signup failed. Please try again.", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+                transition: Zoom,
+            });
         }
 
+        // dispatch(signUpUser(userData)).then((result) => {
+        //     if (result.meta.requestStatus === "fulfilled") {
+        //         navigate("/login");
+        //     }
+        //     if (result.meta.requestStatus === "rejected") {
+        //         toast.error(error, {
+        //             position: "top-right",
+        //             autoClose: 5000,
+        //             hideProgressBar: false,
+        //             closeOnClick: false,
+        //             pauseOnHover: true,
+        //             draggable: true,
+        //             progress: undefined,
+        //             theme: "colored",
+        //             transition: Zoom,
+        //             });
+        //     }
+        // });
+        // setFormData({name: "",email: "",password: "",confirmPassword: "",mobile: ""});
     };
+
     return (
         <div className="container">
+            
             <div className="signup-container">
                 <h3 className="text-center">Sign Up</h3>
                 <form onSubmit={handleSubmit}>
@@ -97,12 +142,12 @@ const SignUp = () => {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="mobile" className="form-label">Contact Number</label>
+                        <label htmlFor="mobile" className="form-label">Mobile Number</label>
                         <input type="tel" className="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number" value={formData.mobile} onChange={handleInputChange} required />
                         {errors.mobile && <p className="text-danger">{errors.mobile}</p>}
                     </div>
 
-                    <button type="submit" className="btn btn-primary w-100">Sign Up</button>
+                    <button type="submit" className="btn btn-primary w-100" disabled={loading}>{loading ?<CommonSpinner size="sm"/>:"Sign Up"}</button>
                 </form>
                 <p className="text-center mt-3">Already have an account? <Link to="/login">Login</Link></p>
             </div>
