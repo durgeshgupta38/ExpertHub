@@ -4,28 +4,54 @@ import { Container, Row, Col, Tab, Nav, Button, Image, Card, Form } from "react-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./account.css";
 import BookingTable from "../Booking/MyBookings";
+import { useDispatch, useSelector } from "react-redux";
+import { CommonToast } from "../../../ComponentReuse/Loader/commonToast";
+import { getUserDetails, updateProfilePic } from "../../../Redux/Slices/userSlice";
+import CommonSpinner from "../../../ComponentReuse/Loader/Spinner";
 
 const TabBar = () => {
-  const [profileImage, setProfileImage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const defaultTab = queryParams.get("tab") || "account";
   const [activeTab, setActiveTab] = useState(defaultTab);
+  const dispatch = useDispatch();
+  const { user, loading } = useSelector((state) => state.user);
+
+  useEffect(() => {
+        dispatch(getUserDetails()).unwrap() // Unwrap to get the actual result/error
+        .then((result) => {
+            console.log('Data loaded:', result);
+        })
+        .catch((error) => {
+          if (error.name !== 'AbortError') {
+            console.error('Error:', error);
+          }
+        });
+  }, [dispatch]);
 
   useEffect(() => {
     setActiveTab(defaultTab);
   }, [defaultTab]);
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
+      // const imageUrl = URL.createObjectURL(file);
+      try {
+        const response = await dispatch(updateProfilePic(file)).unwrap();
+      // setProfileData(response.data);
+        console.log("Updated user data:", response);
+      } catch (error) {
+        CommonToast("error",error.message || "Failed to update profile picture.")
+
+      }
     }
   };
   const handleEditAccount=()=>{
-    navigate("/account/edit");
+    navigate("/account/edit",{
+      state: { userData:user }, // Pass the user object or any data
+    });
   }
 
   return (
@@ -53,11 +79,12 @@ const TabBar = () => {
                 <Col md={6} xs={4} className="text-center position-relative" >
                   {/* Profile Image */}
                   <div  xs={4} className="profile-img-container">
-                    <Image src={profileImage} roundedCircle className="profile-img" />
+                    
+                    <Image src={user?.profile} roundedCircle className="profile-img" />
                     {/* Camera Icon - Visible on Hover */}
                     <div className="profile-img-overlay">
                       <label htmlFor="profileImageUpload" className="camera-icon">
-                      <i>✏️</i>
+                      {loading ? <CommonSpinner size="sm" dontShowtext={true}/> : <i>✏️</i>}
                       </label>
                       <Form.Control
                         id="profileImageUpload"
@@ -65,6 +92,7 @@ const TabBar = () => {
                         accept="image/*"
                         onChange={handleImageChange}
                         className="profileImag"
+                        disabled={false}
                       />
                     </div>
                   </div>
@@ -77,18 +105,18 @@ const TabBar = () => {
               </Row>
               <Row>
                 <Col md={9} className="mt-6 profilegap">
-                  <h3>Durgesh Gupta</h3>
+                  <h3>{user?.name}</h3>
                   <p>
-                    <strong>Email:</strong> durgeshgupta38@gmail.com
+                    <strong>Email:</strong> {user?.email}
                   </p>
                   <p>
-                    <strong>Address:</strong> <i>Address not set</i>
+                    <strong>Address:</strong> <i>{user?.address}</i>
                   </p>
                   <p>
-                    <strong>Mobile:</strong> N/A
+                    <strong>Mobile:</strong> {user?.mobile}
                   </p>
                   <p>
-                    <strong>Date Joined:</strong> <span className="joined-date">March 13, 2025</span>
+                    <strong>Date Joined:</strong> <span className="joined-date">{user?.createdAt}</span>
                   </p>
                 </Col>
               </Row>

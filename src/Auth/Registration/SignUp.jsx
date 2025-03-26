@@ -62,7 +62,7 @@ const SignUp = () => {
             const result = await dispatch(signUpUser(userData)).unwrap(); // 1st and 6th unwrap the response
             console.log(result, "Signup Response");
             navigate("/login");
-            CommonToast("success", "SignUp successful!")
+            CommonToast("success", "SignUp successful Please login to continue")
             setFormData({ name: "", email: "", password: "", confirmPassword: "", mobile: "" });
             setErrors({});
         } catch (error) {
