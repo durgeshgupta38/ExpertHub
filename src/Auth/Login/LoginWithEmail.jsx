@@ -6,7 +6,8 @@ import { loginUser } from "../../Redux/Slices/userSlice";
 import CommonSpinner from "../../ComponentReuse/Loader/Spinner";
 import "react-toastify/dist/ReactToastify.css";
 import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
-
+import { useLocation } from "react-router-dom";
+import { Form, InputGroup, Button } from "react-bootstrap";
 const LoginWithEmail = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -15,7 +16,10 @@ const LoginWithEmail = () => {
         email: "",
         password: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
+    const location = useLocation();
+    const redirectPath = location.state?.path || "/";
     const validateForm = () => {
         let newErrors = {};
 
@@ -36,7 +40,6 @@ const LoginWithEmail = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
-            console.log("Validation errors:", errors);
             return
         }
         let newformData = {
@@ -46,19 +49,22 @@ const LoginWithEmail = () => {
 
         try {
             const result = await dispatch(loginUser(newformData)).unwrap(); // Unwraps the response
-            console.log(result, "Login Response");
-
-            // 🔹 Redirect Based on Role
-            if (result.user.role === "admin") navigate("/admin");
-            if (result.user.role === "user") navigate("/");
-            if (result.user.role === "agent") navigate("/agent");
             CommonToast("success", "Login successful!")
-
-            // 🔹 Reset Form
             setFormData({ email: "", password: "" });
             setErrors({});
+               // 🔹 Redirect Based on Role
+               if (result.user.role === "admin") navigate("/admin");
+               if (result.user.role === "user") {
+                if(redirectPath){
+                    navigate(redirectPath)
+                }else{
+                    navigate("/")
+                }
+                
+            }
+               if (result.user.role === "agent") navigate("/agent");
+
         } catch (error) {
-            console.error("Login Error:", error);
             CommonToast("error", error || "Login failed. Please try again.")
         }
     }
@@ -74,9 +80,16 @@ const LoginWithEmail = () => {
                     {errors.email && <p className="text-danger">{errors.email}</p>}
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="password" name="password" autoComplete="current-password" placeholder="Enter your password" value={formData.password} onChange={handleInputChange} required />
-                    {errors.password && <p className="text-danger">{errors.password}</p>}
+                    <Form.Group>
+                        <Form.Label htmlFor="password" className="form-label">Password</Form.Label>
+                        <InputGroup>
+                            <Form.Control type={showPassword ? "text" : "password"} className="form-control" id="password" name="password" autoComplete="current-password" placeholder="Enter your password" value={formData.password} onChange={handleInputChange} required />
+                            <Button variant="outline-secondary" className="no-hover" onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? "👁️‍🗨️" : '🙈'}
+                            </Button>
+                        </InputGroup>
+                        {errors.password && <p className="text-danger">{errors.password}</p>}
+                    </Form.Group>
                 </div>
                 <button type="submit" className="btn btn-primary w-100" disabled={loading}>{loading && !isLoggedIn ? <CommonSpinner size="sm" /> : "Login"}</button>
 

@@ -25,10 +25,10 @@ export const apiRequest = async (endpoint, method = "GET", body = null, headers 
       if (accessToken) {
         return apiRequest(endpoint, method, body, headers, isFormData, requiresAuth); // Retry request with new token
       } else {
-          // Lazy Import store & logoutUser to prevent circular dependency
-          const { store } = await import("../../Redux/Store/store");
-          const { logoutUser } = await import("../../Redux/Slices/userSlice");
-  
+        // Lazy Import store & logoutUser to prevent circular dependency
+        const { store } = await import("../../Redux/Store/store");
+        const { logoutUser } = await import("../../Redux/Slices/userSlice");
+
         store.dispatch(logoutUser()); // Log out user if refresh fails
         return Promise.reject("Session expired. Please log in again.");
       }
@@ -41,7 +41,7 @@ export const apiRequest = async (endpoint, method = "GET", body = null, headers 
 
     return response.json();
   } catch (error) {
-    console.error("API Request Error:", error.message);
+      console.error("API Request Error:", error.message);
     throw error;
   }
 };
@@ -61,11 +61,11 @@ export const refreshAccessToken = async () => {
     if (data.success && data.accessToken) {
       localStorage.setItem("accessToken", data.accessToken);
       return data.accessToken;
-    }else {
+    } else {
       throw new Error(data.message || "Could not refresh token");
     }
   } catch (error) {
-    console.error("Failed to refresh token:", error);
+      console.error("Failed to refresh token:", error);
     return null;
   }
 };

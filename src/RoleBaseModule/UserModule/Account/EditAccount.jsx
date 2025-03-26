@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col, Card, ListGroup } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Card, ListGroup, InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./account.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CommonToast } from "../../../ComponentReuse/Loader/commonToast";
+import { changePassword, logoutUser } from "../../../Redux/Slices/userSlice";
+import { useDispatch } from "react-redux";
 const EditAccount = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -13,10 +19,53 @@ const EditAccount = () => {
     addresses: [],
     defaultAddress: null,
   });
-
+  const [errors, setErrors] = useState({});
+  const [{oldPassword,newPassword,confirmPassword}, setPassword] = useState({oldPassword:"",newPassword:"",confirmPassword:""});
+  const [showPassword, setShowPassword] = useState({
+    old: false,
+    new: false,
+    confirm: false,
+  });
   const [newAddress, setNewAddress] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
+  const location = useLocation();
+  const userData = location.state?.userData; // Access passed data
+  // console.log(userData,"popopopopo")
+  const togglePassword = (field) => {
+    setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
+  const validateForm = () => {
+    let newErrors = {};
+    // if (!/^[a-zA-Z\s]{3,}$/.test(formData.name)) {
+    //     newErrors.name = "Full name must be at least 3 characters and contain only letters & spaces.";
+    // // }
 
+    // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // if (!emailRegex.test(formData.email)) {
+    //     newErrors.email = "Enter a valid email address.";
+    // }
+    
+    const oldPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!oldPasswordRegex.test(oldPassword)) {
+        newErrors.oldPassword = "Password must be at least 8 characters, include a letter, number, and special character.";
+    }
+
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(newPassword)) {
+        newErrors.newPassword = "Password must be at least 8 characters, include a letter, number, and special character.";
+    }
+
+    if (newPassword !== confirmPassword) {
+        newErrors.confirmPassword = "Passwords do not match.";
+    }
+    // const phoneRegex = /^(?:\+91)?[0-9]{10}$/;
+    // if (!phoneRegex.test(formData.mobile)) {
+    //     newErrors.mobile = "Enter a valid 10-digit mobile number (with or without +91).";
+    // }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+};
   // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -93,6 +142,23 @@ const EditAccount = () => {
     }
   };
 
+
+  const handleChangePassword = async () => {
+    if (!validateForm()) {
+      return
+  }
+
+    try {
+      const response = await dispatch(changePassword({ oldPassword, newPassword })).unwrap();
+      CommonToast("success", response.message +""+ "Please login again to continue");
+      dispatch(logoutUser());
+      navigate("/login",{state:{path:"/account/edit"}});
+      setPassword({oldPassword:"",newPassword:"",confirmPassword:""});
+    } catch (error) {
+      CommonToast("error", error || "Failed to change password.");
+    }
+  };
+
   return (
     <Container className="d-flex justify-content-center">
       <Col md={9}>
@@ -119,7 +185,7 @@ const EditAccount = () => {
               </Form.Select>
             </Form.Group>
 
-            <Row>
+            {/* <Row>
               <Col>
                 <Form.Group controlId="password" className="mt-2">
                   <Form.Label>Password</Form.Label>
@@ -132,7 +198,66 @@ const EditAccount = () => {
                   <Form.Control type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
                 </Form.Group>
               </Col>
-            </Row>
+            </Row> */}
+           <Row className="mt-4">
+  <Col md={4}>
+    <Form.Group>
+      <Form.Label>Old Password</Form.Label>
+      <InputGroup>
+      <Form.Control
+        type={showPassword.old ? "text" : "password"}
+        placeholder="Enter old password"
+        value={oldPassword}
+        onChange={(e) => setPassword(prev=>({...prev,oldPassword:e.target.value}))}
+      />
+        <Button variant="outline-secondary" className="no-hover" onClick={() => togglePassword("old")}>
+            {showPassword.old ? "👁️‍🗨️" : '🙈'}
+          </Button>
+      </InputGroup>
+      {errors.oldPassword && <p className="text-danger">{errors.oldPassword}</p>}
+
+    </Form.Group>
+  </Col>
+  <Col md={4}>
+    <Form.Group>
+      <Form.Label>New Password</Form.Label>
+      <InputGroup>
+      <Form.Control
+         type={showPassword.new ? "text" : "password"}
+        placeholder="Enter new password"
+        value={newPassword}
+        onChange={(e) => setPassword(prev=>({...prev,newPassword:e.target.value}))}
+      />
+       <Button variant="outline-secondary" className="no-hover" onClick={() => togglePassword("new")}>
+            {showPassword.new ? "👁️‍🗨️" : '🙈'}
+          </Button>
+      </InputGroup>
+      {errors.newPassword && <p className="text-danger">{errors.newPassword}</p>}
+    </Form.Group>
+  </Col>
+  <Col md={4}>
+    <Form.Group>
+      <Form.Label>Confirm New Password</Form.Label>
+      <InputGroup>
+      <Form.Control
+      type={showPassword.confirm ? "text" : "password"}
+        placeholder="Confirm new password"
+        value={confirmPassword}
+        onChange={(e) => setPassword(prev=>({...prev,confirmPassword:e.target.value}))}
+      />
+       <Button variant="outline-secondary" className="no-hover" onClick={() => togglePassword("confirm")}>
+            {showPassword.confirm ? "👁️‍🗨️" : '🙈'}
+          </Button>
+      </InputGroup>
+    {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword}</p>}
+    </Form.Group>
+  </Col>
+</Row>
+
+<Button className="mt-3" onClick={handleChangePassword}>
+  Change Password
+</Button>
+
 
             <Form.Group controlId="mobile" className="mt-2">
               <Form.Label>Mobile Number</Form.Label>

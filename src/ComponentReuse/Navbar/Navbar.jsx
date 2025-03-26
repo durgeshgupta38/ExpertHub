@@ -11,9 +11,7 @@ import { CommonToast } from "../Loader/commonToast";
 const NavBar = () => {
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-  let isLoggedIn = localStorage.getItem("isLoggedIn")
-  let role = localStorage.getItem("roles");
-
+  const {isLoggedIn,role} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // Handle Scroll for Sticky Navbar
@@ -28,12 +26,10 @@ const NavBar = () => {
   const handleLogout = async () => {
     try {
       const result = await dispatch(logoutUser()).unwrap();
-      console.log(result, "logout Response");
       navigate("/login");
       CommonToast("success", "Logout successful!")
 
     } catch (error) {
-      console.error("Logout Error:", error);
       CommonToast("error", error || "Logout failed. Please try again.")
     }
   }

@@ -1,11 +1,11 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
 import "./loader.css"
-const CommonSpinner=({size})=>{
+const CommonSpinner=({size,dontShowtext})=>{
     return (
         <div className="text-center spinner">
               <Spinner animation="border" variant="warning"  as="span" size={size?"sm":""}/>
-              <span className={`ms-2 ${size?"spin":"load"}`}>Loading...</span>
+              <span className={`${dontShowtext ?"ms-0":"ms-2"} ${size?"spin":"load"}`}>{!dontShowtext&&"Loading..."}</span>
             </div>
     )
 }
