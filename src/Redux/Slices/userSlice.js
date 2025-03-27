@@ -90,6 +90,19 @@ export const changePassword = createAsyncThunk("user/change-password", async (cr
     return rejectWithValue(error.message);
   }
 });
+
+export const updateUserAccount = createAsyncThunk(
+  "user/update-account",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await apiRequest("users/update-account", "PATCH", credentials, {}, false, true);
+      return response; // Return updated user data
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const initialState = {
   user: null,
   isLoggedIn: !!localStorage.getItem("isLoggedIn"),
@@ -194,7 +207,19 @@ const userSlice = createSlice({
 
         state.loading = false;
         state.error = action.payload;
-      });
+      }) 
+      .addCase(updateUserAccount.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserAccount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(updateUserAccount.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 

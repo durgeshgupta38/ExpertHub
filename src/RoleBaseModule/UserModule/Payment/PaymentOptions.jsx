@@ -17,7 +17,7 @@ const PaymentOptions = () => {
   const otherBanks = ["Punjab National Bank", "Bank of Baroda", "Yes Bank"];
 
   return (
-    <div className="container paymentCont d-flex justify-content-center align-items-center vh-100">
+    <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 paymentCard">
         <h3 className="text-center mb-3">Select Payment Method</h3>
         {/* Payment Selection Tabs */}

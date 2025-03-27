@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CommonToast } from "../../../ComponentReuse/Loader/commonToast";
 import { getUserDetails, updateProfilePic } from "../../../Redux/Slices/userSlice";
 import CommonSpinner from "../../../ComponentReuse/Loader/Spinner";
+import Loader from "../../../ComponentReuse/Loader/Loader";
 
 const TabBar = () => {
   const location = useLocation();
@@ -71,13 +72,12 @@ const TabBar = () => {
 
         <Tab.Content>
           {/* Account Section */}
-          <Tab.Pane eventKey="account">
+          {loading?<Loader/> : <Tab.Pane eventKey="account">
             <Card className="profile-card">
               <Row className="profile-body mt-3">
-                <Col md={6} xs={4} className="text-center position-relative" >
+                <Col md={6} xs={4} className="text-center position-relative">
                   {/* Profile Image */}
                   <div  xs={4} className="profile-img-container">
-                    
                     <Image src={user?.profile} roundedCircle className="profile-img" />
                     {/* Camera Icon - Visible on Hover */}
                     <div className="profile-img-overlay">
@@ -119,7 +119,8 @@ const TabBar = () => {
                 </Col>
               </Row>
             </Card>
-          </Tab.Pane>
+          </Tab.Pane>}
+      
 
           <Tab.Pane eventKey="myBooking">
             <Card className="profile-card">

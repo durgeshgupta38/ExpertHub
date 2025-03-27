@@ -3,7 +3,6 @@
     background: #f8f9fa;
     padding: 20px;
     border-radius: 10px;
-    min-height: 100vh;
   }
 
   .profile-card {
@@ -102,18 +101,22 @@ padding: 1px 4px;
  font-size: 12px;
 }
 .submittype{
-  padding: 3px 8px;
+  padding: 4px 12px;
    font-size: 14px;
 }
 .profileImag{
   display: none
 }
-.profilegap{
-  margin-top: 50px;
-  /* margin-left: 10px; */
-}
+
 
 .no-hover:hover {
   background-color: transparent !important; 
   border:1px solid #444
 }
+.btnwidth{
+  width:150px
+}
+.agentList{
+  background-color: #f8f9fa;
+  border:1px solid #d4d6d9;
+  }

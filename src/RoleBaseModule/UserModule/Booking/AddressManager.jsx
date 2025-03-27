@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "bootstrap/dist/js/bootstrap.bundle.min.js"; 
 const AddressManagerDrop = () => {
     const [showForm, setShowForm] = useState(false);
     const [activeAccordion, setActiveAccordion] = useState(null);
@@ -32,6 +32,7 @@ const AddressManagerDrop = () => {
                 locality: "Aditya Vasralay, new Market, Near Post office.",
                 city: "Ballia",
                 state: "Uttar Pradesh",
+                defaultAddress:"Default",
             },
             {
                 id: 2,
@@ -44,6 +45,20 @@ const AddressManagerDrop = () => {
                 locality: "H. No. 5, Ravi Yadav building Near Narmadeshwar mandir, Nawada rassolpur",
                 city: "Noida",
                 state: "Uttar Pradesh",
+                defaultAddress:"",
+            },
+            {
+                id: 3,
+                name: "suni Gupta",
+                phone: "9452386630",
+                pincode: "277201",
+                address: "mina market",
+                landmark: "near burj khalifa",
+                altPhone: "1234567890",
+                locality: "Aditya Vasralay, new Market, Near Post office.",
+                city: "Ballia",
+                state: "Uttar Pradesh",
+                defaultAddress:"",
             },
         ],
         delivery: [
@@ -58,6 +73,7 @@ const AddressManagerDrop = () => {
                 locality: "Aditya Vasralay, new Market, Near Post office.",
                 city: "Ballia",
                 state: "Uttar Pradesh",
+                defaultAddress:"Default",
             },
             {
                 id: 2,
@@ -70,6 +86,7 @@ const AddressManagerDrop = () => {
                 locality: "H. No. 5, Ravi Yadav building Near Narmadeshwar mandir, Nawada rassolpur",
                 city: "Noida",
                 state: "Uttar Pradesh",
+                defaultAddress:"",
             },
         ]
     });
@@ -131,6 +148,21 @@ const AddressManagerDrop = () => {
         setFormMode({ mode: "edit", index, type });
     };
 
+    const handleDelete=(address, type, index)=>{
+    let filterData=addresses[type].filter((add,ind)=>ind!==index)
+    setAddresses(prev => ({ ...prev, [type]:filterData }));
+    }
+
+    const handleDefault = (address, type, index) => {
+      setAddresses(prev => ({
+        ...prev,
+        [type]: prev[type].map((value, ind) => ({
+            ...value,
+            defaultAddress: ind === index ? "Default" : ""
+        }))
+      }));
+    };
+
     const handleAccordionToggle = (type) => {
         setActiveAccordion(prev => (prev === type ? null : type));
     };
@@ -157,6 +189,8 @@ const AddressManagerDrop = () => {
                             data-bs-parent="#accordionFlushExample"
                         >
                             <div className="accordion-body">
+                            {addresses.pickup.length==0&&<spn>No Address found, please add an Pickup Address to continue</spn> }
+
                                 {addresses.pickup.map((addr, index) => (
                                     <React.Fragment key={index}>
                                         <div className="form-check mb-2">
@@ -165,9 +199,15 @@ const AddressManagerDrop = () => {
                                             />
                                             <label className="form-check-label">
                                                 <strong>{addr.name}</strong> {addr.phone} <br />
-                                                {addr.locality}, {addr.city}, {addr.state} - <strong>{addr.pincode}</strong>
+                                                {addr.locality}, {addr.city}, {addr.state} - <strong>{addr.pincode}</strong>{addr.defaultAddress && `(${addr.defaultAddress })`}
                                             </label>
-                                            {selectedAddress.pickupIndex === index && <button className="btn btn-link float-end text-primary" onClick={() => handleEdit(addr, "pickup", index)}>Edit</button>}
+                                            {selectedAddress.pickupIndex === index &&
+                                              <div className="btn-group">
+                                             <button className="btn btn-sm btn-outline-primary py-0" onClick={() => handleEdit(addr, "pickup", index)}>Edit</button>
+                                             <button className="btn btn-sm btn-outline-danger py-0" onClick={() => handleDelete(addr, "pickup", index)}>Delete</button>
+                                             {!addr.defaultAddress &&<button className="btn btn-sm btn-outline-success py-0" onClick={() => handleDefault(addr, "pickup", index)}>set Default</button>} 
+                                             </div>
+                                            }
                                         </div>
                                         {addresses.pickup.length - 1 !== index && <hr />}
                                     </React.Fragment>
@@ -193,6 +233,7 @@ const AddressManagerDrop = () => {
                             data-bs-parent="#accordionFlushExample"
                         >
                             <div className="accordion-body">
+                                {addresses.delivery.length==0&&<spn>No Address found, please add an Delivery Address to continue</spn> }
                                 {addresses.delivery.map((addr, index) => (
                                     <React.Fragment key={index}>
                                         <div className="form-check mb-2">
@@ -201,9 +242,15 @@ const AddressManagerDrop = () => {
                                             />
                                             <label className="form-check-label">
                                                 <strong>{addr.name}</strong> {addr.phone} <br />
-                                                {addr.locality}, {addr.city}, {addr.state} - <strong>{addr.pincode}</strong>
+                                                {addr.locality}, {addr.city}, {addr.state} - <strong>{addr.pincode}</strong>{addr.defaultAddress && `(${addr.defaultAddress })`}
                                             </label>
-                                            {selectedAddress.deliveryIndex === index && <button className="btn btn-link float-end text-primary" onClick={() => handleEdit(addr, "delivery", index)}>Edit</button>}
+                                            {selectedAddress.deliveryIndex === index &&
+                                            <div className="btn-group">
+                                            <button className="btn btn-sm btn-outline-primary py-0" onClick={() => handleEdit(addr, "delivery", index)}>Edit</button>
+                                            <button className="btn btn-sm btn-outline-danger py-0" onClick={() => handleDelete(addr, "delivery", index)}>Delete</button>
+                                            {!addr.defaultAddress &&<button className="btn btn-sm btn-outline-success py-0" onClick={() => handleDefault(addr, "delivery", index)}>set Default</button>}
+                                            </div>
+                                             }
                                         </div>
                                         {addresses.delivery.length - 1 !== index && <hr />}
                                     </React.Fragment>
@@ -212,7 +259,7 @@ const AddressManagerDrop = () => {
                         </div>
                     </div>
                 </div>
-                {/* <hr /> */}
+    
                 {activeAccordion && (
                     <button className="btn btn-primary mt-2 pt-0" onClick={toggleAddressForm}>
                         {`+ Add a new ${activeAccordion} Address`}
@@ -284,3 +331,4 @@ const AddressManagerDrop = () => {
 };
 
 export default AddressManagerDrop;
+                                            
