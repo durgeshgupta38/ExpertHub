@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../../Redux/Slices/userSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
+import { Form, InputGroup,Button } from "react-bootstrap";
 const SignUp = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -18,7 +19,13 @@ const SignUp = () => {
         mobile: ""
     });
     const [errors, setErrors] = useState({});
-
+  const [showPassword, setShowPassword] = useState({
+    new: false,
+    confirm: false,
+  });
+  const togglePassword = (field) => {
+    setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
     const validateForm = () => {
         let newErrors = {};
 
@@ -90,15 +97,32 @@ const SignUp = () => {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="password" name="password" placeholder="Enter your password" value={formData.password} onChange={handleInputChange} required autoComplete="new-password" />
+                      <Form.Group>
+                     <Form.Label htmlFor="password" className="form-label">Password</Form.Label>
+                     <InputGroup>
+                        <Form.Control type={showPassword.new ? "text" : "password"} className="form-control" id="password" name="password" placeholder="Enter your password" value={formData.password} onChange={handleInputChange} required autoComplete="new-password" />
+                         <Button variant="outline-secondary" className="no-hover" onClick={() => togglePassword("new")}>
+                          {showPassword.new ? "👁️‍🗨️" : '🙈'}
+                         </Button>
+                        </InputGroup>
                         {errors.password && <p className="text-danger">{errors.password}</p>}
+                        </Form.Group>
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-                        <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter password to confirm" value={formData.confirmPassword} onChange={handleInputChange} required autoComplete="new-password" />
+                    <Form.Group>
+                     <Form.Label htmlFor="confirmPassword" className="form-label">Confirm Password</Form.Label>
+                     <InputGroup>
+                        <Form.Control type={showPassword.confirm ? "text" : "password"}  className="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter password to confirm" value={formData.confirmPassword} onChange={handleInputChange} required autoComplete="new-password"/>
+                         <Button variant="outline-secondary" className="no-hover" onClick={() => togglePassword("confirm")}>
+                          {showPassword.confirm ? "👁️‍🗨️" : '🙈'}
+                         </Button>
+                        </InputGroup>
                         {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword}</p>}
+                        </Form.Group>
+                        {/* <label htmlFor="confirmPassword" className="form-label">Confirm Password</label> */}
+                        {/* <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter password to confirm" value={formData.confirmPassword} onChange={handleInputChange} required autoComplete="new-password" /> */}
+                        {/* {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword}</p>} */}
                     </div>
 
                     <div className="mb-3">
