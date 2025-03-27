@@ -21,12 +21,10 @@ const TabBar = () => {
   useEffect(() => {
         dispatch(getUserDetails()).unwrap() // Unwrap to get the actual result/error
         .then((result) => {
-            console.log('Data loaded:', result);
+            // console.log('Data loaded:', result);
         })
         .catch((error) => {
-          if (error.name !== 'AbortError') {
             console.error('Error:', error);
-          }
         });
   }, [dispatch]);
 

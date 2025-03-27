@@ -65,11 +65,9 @@ export const getUserDetails = createAsyncThunk(
       // Use the signal from Redux Toolkit to automatically handle cancellations
       const response = await apiRequest("users/current-user", "GET", null, {
         Authorization: `Bearer ${token}`,
-        // Pass Redux Toolkit’s signal directly
       }, false, false,
         // signal // Pass the signal from Redux Toolkit
       );
-      console.log(response.data, "response.dataresponse.data")
       return response.data;
     } catch (error) {
       if (error.name === "AbortError") {
@@ -94,9 +92,8 @@ export const changePassword = createAsyncThunk("user/change-password", async (cr
 });
 const initialState = {
   user: null,
-  isLoggedIn: localStorage.getItem("isLoggedIn") == true,
+  isLoggedIn: !!localStorage.getItem("isLoggedIn"),
   role: localStorage.getItem("role") || null,
-  // isLoggedIn: !!localStorage.getItem("isLoggedIn"),
   isAuthenticated: !!localStorage.getItem("accessToken"), // Check token presence
   loading: false,
   error: null,
@@ -132,6 +129,8 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.isLoggedIn = true;
+        state.role = action.payload.user.role
+
         state.accessToken = action.payload.accessToken;
         localStorage.setItem("role", action.payload.user.role);
         localStorage.setItem("accessToken", action.payload.accessToken);
@@ -149,6 +148,7 @@ const userSlice = createSlice({
         state.isAuthenticated = false;
         state.accessToken = null;
         state.isLoggedIn = false;
+        state.role = null;
         localStorage.removeItem("accessToken");
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("isLoggedIn");
@@ -188,11 +188,9 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(changePassword.fulfilled, (state, action) => {
-        console.log(action,"yyyyyyyyyyy")
         state.loading = false;
       })
       .addCase(changePassword.rejected, (state, action) => {
-        console.log(action,"eeeeeeeerrrrrrrrrreeeeeeee")
 
         state.loading = false;
         state.error = action.payload;

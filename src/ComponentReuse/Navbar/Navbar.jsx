@@ -11,9 +11,25 @@ import { CommonToast } from "../Loader/commonToast";
 const NavBar = () => {
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-  const {isLoggedIn,role} = useSelector((state) => state.user);
+  // const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+  // const role = useSelector((state) => state.user.role)
+const isLoggedIn=!!localStorage.getItem("isLoggedIn")
+const role=localStorage.getItem("role")
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const result = await dispatch(logoutUser()).unwrap();
+      CommonToast("success", "Logout successful!")
+      navigate("/login");
+
+    } catch (error) {
+      CommonToast("error", error || "Logout failed. Please try again.")
+    }
+  }
+
   // Handle Scroll for Sticky Navbar
   useEffect(() => {
     const scrollHandler = () => {
@@ -23,16 +39,7 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      const result = await dispatch(logoutUser()).unwrap();
-      navigate("/login");
-      CommonToast("success", "Logout successful!")
 
-    } catch (error) {
-      CommonToast("error", error || "Logout failed. Please try again.")
-    }
-  }
   return (
     <Navbar fixed="top" expand="md" className={`navbar ${isFixed ? "fixed" : ""}`}>
       <Container>

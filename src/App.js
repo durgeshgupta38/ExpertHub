@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { ToastContainer, Zoom } from "react-toastify";
 import { Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
 import NavBar from "./ComponentReuse/Navbar/Navbar";
@@ -9,8 +9,8 @@ import Footer from "./ComponentReuse/Footer/Footer";
 import routes from "./Routes/routesConfig";
 import Loader from "./ComponentReuse/Loader/Loader";
 
-function App() {
 
+function App() {
   // useAutoLogout();
   return (
     // <AuthProvider>
