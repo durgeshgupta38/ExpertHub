@@ -52,16 +52,15 @@ const LoginWithEmail = () => {
             CommonToast("success", "Login successful!")
             setFormData({ email: "", password: "" });
             setErrors({});
-               // 🔹 Redirect Based on Role
-               if (result.user.role === "admin") navigate("/admin");
+
                if (result.user.role === "user") {
-                if(redirectPath){
-                    navigate(redirectPath)
-                }else{
-                    navigate("/")
-                }
-                
-            }
+                    if(redirectPath){
+                      navigate(redirectPath)
+                    }else{
+                      navigate("/")
+                    }  
+               }
+               if (result.user.role === "admin") navigate("/admin");
                if (result.user.role === "agent") navigate("/agent");
 
         } catch (error) {

@@ -14,7 +14,9 @@ const toastShown = useRef(false);
     }
   }, [isLoggedIn]);
 
-  return isLoggedIn ? <Outlet /> : <Navigate to="/login" state={{ path: location.pathname }} replace />;
+  return isLoggedIn ? <Outlet /> : <Navigate to="/login"/>;
+  // return isLoggedIn ? <Outlet /> : <Navigate to="/login" state={{ path: location.pathname }} replace />;
+
 };
 
 export default PrivateRoute;
