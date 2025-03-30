@@ -5,14 +5,20 @@ import SliderHome from "../../../ComponentReuse/SliderCard/Slider";
 import useWindowScrollToTop from "../../../CustomHook/useWindowScrollToTop";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import HomePage from "./HomePage";
 
 const Home = () => {
   useWindowScrollToTop();
+  const isLoggedIn=localStorage.getItem("isLoggedIn")
+  const role=localStorage.getItem("role")
+const isAuthenticated= !!localStorage.getItem("isAuthenticated")
+
   return (
-    <Fragment>
+    <>
       <SliderHome />
-      <Wrapper />
-    </Fragment>
+      {!isLoggedIn &&  <HomePage isLoggedIn={isLoggedIn} isAuthenticated={isAuthenticated}/>}
+      {isLoggedIn && role=="user"&& <Wrapper/>}
+    </>
   );
 };
 

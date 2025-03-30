@@ -5,6 +5,8 @@ import AgentDescriptionPage from "../RoleBaseModule/UserModule/Agent/AgentDescri
 import PaymentOptions from "../RoleBaseModule/UserModule/Payment/PaymentOptions";
 import NotFound from "../ComponentReuse/Misceleneous/Notfound";  
 import ReviewAndComplete from "../RoleBaseModule/UserModule/Booking/ReviewAndComplete"
+import UserManagement from "../RoleBaseModule/AdminModule/admin/UserManagement";
+import AdminDashboard from "../RoleBaseModule/AdminModule/admin/AdminDashboard";
 
 const Home = lazy(() => import("../RoleBaseModule/UserModule/Dashboard/Home"));
 const SignUp = lazy(() => import("../Auth/Registration/SignUp"));
@@ -12,7 +14,7 @@ const Login = lazy(() => import("../Auth/Login/Login"));
 const AgentDashboard = lazy(() => import("../RoleBaseModule/AgentModule/AgentDashboard"))
 // const UserDashboard = lazy(() => import("./pages/UserDashboard"))
 const ExpertList = lazy(() => import("../RoleBaseModule/UserModule/Agent/ExpertList"))
-const AdminPanel = lazy(() => import("../RoleBaseModule/AdminModule/AdminPanel"))
+// const AdminLayout = lazy(() => import("../RoleBaseModule/AdminModule/AdminLayout"))
 const PrivateRoute = lazy(() => import("./Protected/PrivateRoute"))
 const RoleBasedRoute = lazy(() => import("./RoleBased/RoleBasedRoute"))
 const TabBar = lazy(() => import("../RoleBaseModule/UserModule/Account/TabBar"))
@@ -74,7 +76,10 @@ const routes = [
   {
     path: "/admin",
     element: <RoleBasedRoute allowedRoles={["admin"]} />,
-    children: [{ index: true, element: <AdminPanel /> }],
+    children: [{ index: true, element: <AdminDashboard /> },
+      { path: "usermanagement", element: <UserManagement /> },
+      // { path: "paymentoptions", element: <PaymentOptions /> }
+    ],
   },
   { path: "*", element: <NotFound /> },
 ];

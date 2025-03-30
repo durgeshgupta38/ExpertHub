@@ -6,17 +6,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../../Redux/Slices/userSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
-import { Form, InputGroup,Button } from "react-bootstrap";
+import { Form, InputGroup,Button,ToggleButtonGroup, ToggleButton, } from "react-bootstrap";
 const SignUp = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
+// const [role, setRole] = useState("user");
+
     const { loading, error } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
-        mobile: ""
+        mobile: "",
+        role:"user"
     });
     const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState({
@@ -78,25 +81,33 @@ const SignUp = () => {
         }
     };
 
+const handleUserTypeChange = (val) => {
+    // setRole(val);
+    setFormData(prev=>({...prev, role:val}));
+};
     return (
         <div className="container">
-
             <div className="signup-container">
-                <h3 className="text-center">Sign Up</h3>
+               <h3 className="text-center mb-2">ExpertHub </h3>
+                <ToggleButtonGroup type="radio" name="userType" value={formData.role} className="w-100 mb-2" onChange={handleUserTypeChange}>
+                    <ToggleButton id="user" value="user" variant={formData.role === "user" ? "primary" : "outline-primary"}>Register as User</ToggleButton>
+                    <ToggleButton id="agent" value="agent" variant={formData.role === "agent" ? "primary" : "outline-primary"}> Register as Agent</ToggleButton>
+                </ToggleButtonGroup>
+                
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
+                    <div className="mb-2">
                         <label htmlFor="name" className="form-label">Full Name</label>
                         <input type="text" className="form-control" id="name" name="name" placeholder="Enter your full name" value={formData.name} onChange={handleInputChange} required />
                         {errors.name && <p className="text-danger">{errors.name}</p>}
                     </div>
 
-                    <div className="mb-3">
+                    <div className="mb-2">
                         <label htmlFor="email" className="form-label">Email address</label>
                         <input type="email" className="form-control" id="email" name="email" placeholder="Enter your email" value={formData.email} onChange={handleInputChange} required autoComplete="email" />
                         {errors.email && <p className="text-danger">{errors.email}</p>}
                     </div>
-
-                    <div className="mb-3">
+                    <div className=" mb-2">
+                    {/* <div className="mb-2"> */}
                       <Form.Group>
                      <Form.Label htmlFor="password" className="form-label">Password</Form.Label>
                      <InputGroup>
@@ -109,7 +120,7 @@ const SignUp = () => {
                         </Form.Group>
                     </div>
 
-                    <div className="mb-3">
+                    <div className="mb-2">
                     <Form.Group>
                      <Form.Label htmlFor="confirmPassword" className="form-label">Confirm Password</Form.Label>
                      <InputGroup>
@@ -120,18 +131,15 @@ const SignUp = () => {
                         </InputGroup>
                         {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword}</p>}
                         </Form.Group>
-                        {/* <label htmlFor="confirmPassword" className="form-label">Confirm Password</label> */}
-                        {/* <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter password to confirm" value={formData.confirmPassword} onChange={handleInputChange} required autoComplete="new-password" /> */}
-                        {/* {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword}</p>} */}
                     </div>
-
-                    <div className="mb-3">
+              
+                    <div className="mb-2">
                         <label htmlFor="mobile" className="form-label">Mobile Number</label>
                         <input type="tel" className="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number" value={formData.mobile} onChange={handleInputChange} required />
                         {errors.mobile && <p className="text-danger">{errors.mobile}</p>}
                     </div>
 
-                    <button type="submit" className="btn btn-primary w-100" disabled={loading}>{loading ? <CommonSpinner size="sm" /> : "Sign Up"}</button>
+                    <button type="submit" className="btn btn-primary w-100" disabled={loading}>{loading ? <CommonSpinner size="sm" /> :formData.role === "agent" ? "Continue as Agent" : "Continue as User"}</button>
                 </form>
                 <p className="text-center mt-3">Already have an account? <Link to="/login">Login</Link></p>
             </div>

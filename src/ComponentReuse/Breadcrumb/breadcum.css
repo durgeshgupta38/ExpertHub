@@ -1,3 +1,32 @@
+/* .breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+} */
+.breadcrumb-wrapper {
+    background-color: #fdfeff;
+    /* border-bottom: 1px solid #dee2e6; */
+    margin-top: 75px; /* Height of the navbar */
+}
+
+.breadcrumb {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
 .breadcrumb-item + .breadcrumb-item::before {
-    content: ">"; /* Change slash to arrow */
+    content: ">";
+    color: #cecece;
+}
+
+.breadcrumb-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #6c757d;
 }

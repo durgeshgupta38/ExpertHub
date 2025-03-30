@@ -32,6 +32,7 @@ export const loginUser = createAsyncThunk("user/login", async (credentials, { re
 
 export const logoutUser = createAsyncThunk("user/logout", async (_, { rejectWithValue }) => {
   try {
+    
     const response = await apiRequest("users/logout", "POST", {}, {}, false, true);
     if (response.success) {
       return true;
@@ -107,7 +108,7 @@ const initialState = {
   user: null,
   isLoggedIn: !!localStorage.getItem("isLoggedIn"),
   role: localStorage.getItem("role") || null,
-  isAuthenticated: !!localStorage.getItem("accessToken"), // Check token presence
+  isAuthenticated: !!localStorage.getItem("isAuthenticated") ||false,
   loading: false,
   error: null,
   accessToken: localStorage.getItem("accessToken") || null,
@@ -143,7 +144,6 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.isLoggedIn = true;
         state.role = action.payload.user.role
-
         state.accessToken = action.payload.accessToken;
         localStorage.setItem("role", action.payload.user.role);
         localStorage.setItem("accessToken", action.payload.accessToken);
@@ -158,16 +158,16 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
-        state.isAuthenticated = false;
+        // state.isAuthenticated = false;
         state.accessToken = null;
         state.isLoggedIn = false;
         state.role = null;
         localStorage.removeItem("accessToken");
-        localStorage.removeItem("isAuthenticated");
+        // localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("role");
         state.loading = false;
-
+        state.error = null;
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.loading = false;

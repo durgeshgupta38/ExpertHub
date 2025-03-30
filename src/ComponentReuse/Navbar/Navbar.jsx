@@ -14,6 +14,8 @@ const NavBar = () => {
   // const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
   // const role = useSelector((state) => state.user.role)
 const isLoggedIn=!!localStorage.getItem("isLoggedIn")
+const isAuthenticated= !!localStorage.getItem("isAuthenticated")
+
 const role=localStorage.getItem("role")
 
   const dispatch = useDispatch();
@@ -22,9 +24,10 @@ const role=localStorage.getItem("role")
   const handleLogout = async () => {
     try {
       const result = await dispatch(logoutUser()).unwrap();
-      CommonToast("success", "Logout successful!")
-      navigate("/login");
-
+      if(result){
+        // CommonToast("success", "Logout successful!")
+        navigate("/login");
+      }
     } catch (error) {
       CommonToast("error", error || "Logout failed. Please try again.")
     }
@@ -85,7 +88,10 @@ const role=localStorage.getItem("role")
               </Nav.Item>
             )}
             <Nav.Item>
-              {isLoggedIn ? <Link className="nav-link" to="/login" onClick={handleLogout}>Logout</Link> : <Link className="nav-link" to="/login">Login</Link>}
+              {console.log(isAuthenticated, isLoggedIn ,"kkkkkkkkkkkkkkkkkkkkk")}
+              {isLoggedIn && <Link className="nav-link" to="/login" onClick={handleLogout}>Logout</Link>}
+               { !isAuthenticated &&!isLoggedIn && <Link className="nav-link" to="/signup">Register</Link>}
+               { isAuthenticated && !isLoggedIn && <Link className="nav-link" to="/login">Login</Link>}
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
