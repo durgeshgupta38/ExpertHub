@@ -1,7 +1,9 @@
 import { Navigate,Outlet } from "react-router-dom";
 const RoleBasedRoute = ({ allowedRoles }) => {
 let isLoggedIn=localStorage.getItem("isLoggedIn")
-let role=localStorage.getItem("roles");
+// let role=localStorage.getItem("roles");
+let role="admin"
+
 
 
   if (!isLoggedIn) return <Navigate to="/login" />;

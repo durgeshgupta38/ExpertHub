@@ -36,7 +36,77 @@ const EditAccount = () => {
   });
   const [newAddress, setNewAddress] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
-
+  const [addresses, setAddresses] = useState({
+        pickup: [
+            {
+                id: 1,
+                name: "Vijay Gupta",
+                phone: "9452386630",
+                pincode: "277211",
+                address: "chauhan market",
+                landmark: "near burj khalifa",
+                altPhone: "1234567890",
+                locality: "Aditya Vasralay, new Market, Near Post office.",
+                city: "Ballia",
+                state: "Uttar Pradesh",
+                defaultAddress:"Default",
+            },
+            {
+                id: 2,
+                name: "Durgesh Gupta",
+                phone: "8787882984",
+                pincode: "201301",
+                address: "mina bazar",
+                landmark: "near burj khalifa",
+                altPhone: "0987654321",
+                locality: "H. No. 5, Ravi Yadav building Near Narmadeshwar mandir, Nawada rassolpur",
+                city: "Noida",
+                state: "Uttar Pradesh",
+                defaultAddress:"",
+            },
+            {
+                id: 3,
+                name: "suni Gupta",
+                phone: "9452386630",
+                pincode: "277201",
+                address: "mina market",
+                landmark: "near burj khalifa",
+                altPhone: "1234567890",
+                locality: "Aditya Vasralay, new Market, Near Post office.",
+                city: "Ballia",
+                state: "Uttar Pradesh",
+                defaultAddress:"",
+            },
+        ],
+        delivery: [
+            {
+                id: 1,
+                name: "Rani Gupta",
+                phone: "9452386630",
+                pincode: "277211",
+                address: "chauhan market",
+                landmark: "near burj khalifa",
+                altPhone: "1234567890",
+                locality: "Aditya Vasralay, new Market, Near Post office.",
+                city: "Ballia",
+                state: "Uttar Pradesh",
+                defaultAddress:"Default",
+            },
+            {
+                id: 2,
+                name: "Soni Gupta",
+                phone: "8787882984",
+                pincode: "201301",
+                address: "mina bazar",
+                landmark: "near burj khalifa",
+                altPhone: "0987654321",
+                locality: "H. No. 5, Ravi Yadav building Near Narmadeshwar mandir, Nawada rassolpur",
+                city: "Noida",
+                state: "Uttar Pradesh",
+                defaultAddress:"",
+            },
+        ]
+    });
   const togglePassword = (field) => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
   };
@@ -65,38 +135,38 @@ const EditAccount = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Add or update address
-  const handleAddOrUpdateAddress = () => {
-    if (!newAddress.trim()) return;
-    let updatedAddresses = [...formData.addresses];
+  // // Add or update address
+  // const handleAddOrUpdateAddress = () => {
+  //   if (!newAddress.trim()) return;
+  //   let updatedAddresses = [...formData.addresses];
 
-    if (editingIndex !== null) {
-      updatedAddresses[editingIndex] = newAddress;
-      setEditingIndex(null);
-    } else {
-      updatedAddresses.push(newAddress);
-    }
+  //   if (editingIndex !== null) {
+  //     updatedAddresses[editingIndex] = newAddress;
+  //     setEditingIndex(null);
+  //   } else {
+  //     updatedAddresses.push(newAddress);
+  //   }
 
-    setFormData({ ...formData, addresses: updatedAddresses });
-    setNewAddress("");
-  };
+  //   setFormData({ ...formData, addresses: updatedAddresses });
+  //   setNewAddress("");
+  // };
 
-  // Edit address
-  const handleEditAddress = (index) => {
-    setNewAddress(formData.addresses[index]);
-    setEditingIndex(index);
-  };
+  // // Edit address
+  // const handleEditAddress = (index) => {
+  //   setNewAddress(formData.addresses[index]);
+  //   setEditingIndex(index);
+  // };
 
-  // Delete address
-  const handleDeleteAddress = (index) => {
-    const updatedAddresses = formData.addresses.filter((_, i) => i !== index);
-    setFormData({ ...formData, addresses: updatedAddresses });
-  };
+  // // Delete address
+  // const handleDeleteAddress = (index) => {
+  //   const updatedAddresses = formData.addresses.filter((_, i) => i !== index);
+  //   setFormData({ ...formData, addresses: updatedAddresses });
+  // };
 
-  // Set default address
-  const handleSetDefault = (index) => {
-    setFormData({ ...formData, defaultAddress: index });
-  };
+  // // Set default address
+  // const handleSetDefault = (index) => {
+  //   setFormData({ ...formData, defaultAddress: index });
+  // };
   const validateAccountDetails = () => {
     let newErrors = {};
     if (!/^[a-zA-Z\s]{3,}$/.test(formData.name)) {
@@ -118,7 +188,7 @@ const EditAccount = () => {
     setErrors(prev => ({ ...prev, ...newErrors }));
     return Object.keys(newErrors).length === 0;
   };
-  // Submit form
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateAccountDetails()) {
@@ -127,16 +197,18 @@ const EditAccount = () => {
 
     try {
       const dataToSend = {
-        fullName: formData.name,
+        name: formData.name,
         email: formData.email,
         gender: formData.gender,
         mobile: formData.mobile,
-        addresses: formData.addresses,
-        defaultAddress: formData.addresses[formData.defaultAddress] || null,
+        addresses: addresses,
       };
+
+      console.log(dataToSend,"dataToSenddataToSend")
       const result = await dispatch(updateUserAccount(dataToSend)).unwrap(); // Unwraps the response
-      CommonToast("success", "Login successful!")
-      setFormData({ email: "", name:"",adressses:"",defaultAddress:null,mobile:"",gender:"" });
+      setFormData({ email: "", name:"",adressses:{pickup: [],delivery: []},defaultAddress:null,mobile:"",gender:"" });
+      console.log(result,"reererereer")
+      CommonToast("success", "Details saved successful!")
       setErrors(prev=>({...prev,email: "",name:"",mobile:"",gender:""}));
     } catch (error) {
       CommonToast("error", error || "Unable to update the details. Please try again.")
@@ -167,6 +239,9 @@ const EditAccount = () => {
       <Col md={9}>
         <Card className="p-4 mt-4 agentList">
           <h2 className="text-center">Edit Account Details</h2>
+            {/* Address Section */}
+            <h4 className="mt-3">Addresses</h4>
+            <AddressManagerDrop addresses={addresses} setAddresses={setAddresses}/>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="fullName" className="mt-2">
               <Form.Label>Full Name</Form.Label>
@@ -196,42 +271,10 @@ const EditAccount = () => {
               <Form.Control type="tel" name="mobile" value={formData.mobile} onChange={handleChange} required />
               {errors.mobile && <p className="text-danger">{errors.mobile}</p>}
             </Form.Group>
-
-            {/* Address Section */}
-            <h4 className="mt-3">Addresses</h4>
-            <AddressManagerDrop />
-            {/* Add Address */}
-            {/* <Form.Group controlId="newAddress" className="mb-4">
-              <Row>
-                <Col>
-                  <Form.Control type="text" value={newAddress} onChange={(e) => setNewAddress(e.target.value)} placeholder="Add New Address" />
-                </Col>
-                <Col xs="auto">
-                  <Button variant="primary" onClick={handleAddOrUpdateAddress} className="addresstoggle">
-                    {editingIndex !== null ? "Update Address" : "Add Address"}
-                  </Button>
-                </Col>
-              </Row>
-            </Form.Group> */}
-
-            {/* <ListGroup>
-              {formData?.addresses?.map((address, index) => (
-                <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center mb-2">
-                  {address} {index === formData.defaultAddress && <span className="text-success">(Default)</span>}
-                  <div>
-                    <Button variant="warning" className="commonStyles" onClick={() => handleEditAddress(index)}>Edit</Button>{" "}
-                    <Button variant="danger" className="commonStyles" onClick={() => handleDeleteAddress(index)}>Delete</Button>{" "}
-                    {index !== formData.defaultAddress && (
-                      <Button variant="success" className="commonStyles" onClick={() => handleSetDefault(index)}>Set Default</Button>
-                    )}
-                  </div>
-                </ListGroup.Item>
-              ))}
-            </ListGroup> */}
             {/* Submit Button */}
             <Row className="text-center">
               <Col>
-                <Button type="submit" variant="success" className={`mt-3 submittype ${loading ? "pt-2" : "p-1"}`} disabled={loading}>
+                <Button type="submit" variant="success" className={`mt-3 submittype ${loading ? "pt-1" : "p-2"}`} disabled={loading}>
                   {loading ? <CommonSpinner size="sm" /> : "Submit Account Details"}
                 </Button>
               </Col>

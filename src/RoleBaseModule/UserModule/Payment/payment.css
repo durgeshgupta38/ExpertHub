@@ -1,4 +1,4 @@
-
+/* 
 .paymentCard{
     width: 50rem;
      background-color: #f8f9fa;
@@ -9,4 +9,61 @@
 }
 .maxWidth{
      max-width: 200px;
+} */
+
+.paymentCard {
+    max-width: 50rem;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    border: 1px solid #d4d6d9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bankings {
+    white-space: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.bankings::-webkit-scrollbar {
+    height: 4px;
+}
+
+.bankings::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.bankings::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 2px;
+}
+
+.maxWidth {
+    max-width: 200px;
+}
+
+.captcha-img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.refresh-icon {
+    cursor: pointer;
+    color: #007bff;
+}
+
+.refresh-icon:hover {
+    color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .paymentCard {
+        margin: 1rem;
+        padding: 1rem;
+    }
+    
+    .bankings {
+        padding-bottom: 0.5rem;
+    }
 }

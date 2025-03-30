@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
+
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -12,7 +14,9 @@ root.render(
   <React.StrictMode>
    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Provider store={store}>
-        <App />
+      <Router>
+          <App />
+        </Router>
       </Provider>
     </GoogleOAuthProvider>
   </React.StrictMode>

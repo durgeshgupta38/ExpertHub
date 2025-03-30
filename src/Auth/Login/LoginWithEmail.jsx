@@ -8,7 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
 import { useLocation } from "react-router-dom";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import useWindowScrollToTop from "../../CustomHook/useWindowScrollToTop";
 const LoginWithEmail = () => {
+useWindowScrollToTop()
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { loading, error, isLoggedIn } = useSelector((state) => state.user);
@@ -49,7 +51,7 @@ const LoginWithEmail = () => {
 
         try {
             const result = await dispatch(loginUser(newformData)).unwrap(); // Unwraps the response
-            CommonToast("success", "Login successful!")
+            // CommonToast("success", "Login successful!")
             setFormData({ email: "", password: "" });
             setErrors({});
 
