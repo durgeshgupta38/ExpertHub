@@ -64,9 +64,9 @@ const role=localStorage.getItem("role")
               <Link className="nav-link" to={`${isLoggedIn ?"/"+role:"/"}`} onClick={() => setExpand(false)}>Home</Link>
             </Nav.Item>
             {isLoggedIn && <>
-              <Nav.Item>
+              {/* <Nav.Item>
              {role=="user" && <Link className="nav-link" to="/user/categories" onClick={() => setExpand(false)}>Categories</Link> } 
-              </Nav.Item>
+              </Nav.Item> */}
               <Nav.Item>
                 <button
                   className="nav-link" onClick={(e) => {

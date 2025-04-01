@@ -108,7 +108,29 @@ const TabBar = () => {
                     <strong>Email:</strong> {user?.email}
                   </p>
                   <p>
-                    <strong>Address:</strong> <i>{user?.address}</i>
+                    <strong>Addresses:</strong>
+                    {user?.addresses && (
+                      <>
+                        <div>
+                          <strong>Pickup Addresses:</strong>
+                          {user.addresses.pickup?.map((addr, index) => (
+                            <div key={index} className="mt-2">
+                              {addr.name}, {addr.address}, {addr.city}, {addr.state} - {addr.pincode}
+                              {addr.defaultAddress === "Default" && <span className="ms-2 text-success">(Default)</span>}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-3">
+                          <strong>Delivery Addresses:</strong>
+                          {user.addresses.delivery?.map((addr, index) => (
+                            <div key={index} className="mt-2">
+                              {addr.name}, {addr.address}, {addr.city}, {addr.state} - {addr.pincode}
+                              {addr.defaultAddress === "Default" && <span className="ms-2 text-success">(Default)</span>}
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    )}
                   </p>
                   <p>
                     <strong>Mobile:</strong> {user?.mobile}
@@ -120,7 +142,6 @@ const TabBar = () => {
               </Row>
             </Card>
           </Tab.Pane>}
-      
 
           <Tab.Pane eventKey="myBooking">
             <Card className="profile-card">
