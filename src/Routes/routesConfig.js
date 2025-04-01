@@ -25,6 +25,7 @@ const routes = [
   {
     path: "/",
     element: (() => {
+      
       const isLoggedIn = localStorage.getItem("isLoggedIn")
       const role = localStorage.getItem("role")
 
