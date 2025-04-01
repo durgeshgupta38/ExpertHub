@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
+import SliderHome from '../../../ComponentReuse/SliderCard/Slider';
 
 const HomePage = ({isLoggedIn,isAuthenticated}) => {
 
@@ -9,16 +10,10 @@ const HomePage = ({isLoggedIn,isAuthenticated}) => {
   useEffect(() => {
     setIsVisible(true);
   }, []);
-//   const isLoggedIn=!!localStorage.getItem("isLoggedIn")
-// const isAuthenticated= !!localStorage.getItem("isAuthenticated")
-// const handleRegistration=()=>{
-//   isAuthenticated 
-// }
-// const handleLogin=()=>{
-  
-// }
+
   return (
     <>
+      <SliderHome />
       <div className="home-container">
         {/* Hero Section */}
         <section className="hero-section">
@@ -27,13 +22,13 @@ const HomePage = ({isLoggedIn,isAuthenticated}) => {
               <h1>Connect with the Right Talent</h1>
               <p>Your trusted platform for connecting skilled professionals with opportunities, Find skilled professionals for any task, anytime, anywhere.</p>
               <div className="hero-buttons">
-                {!isAuthenticated &&  <button className="primary-btn" onClick={() => navigate('/signup')}>
+                <button className="primary-btn" onClick={() => navigate('/signup')}>
                   Get Started
-                </button>}
+                </button>
                
-                {isAuthenticated && !isLoggedIn&& <button className="secondary-btn" onClick={() => navigate('/login')}>
+                <button className="secondary-btn" onClick={() => navigate('/login')}>
                   Sign In
-                </button>}  
+                </button>
                
               </div>
             </div>
@@ -233,17 +228,16 @@ const HomePage = ({isLoggedIn,isAuthenticated}) => {
         </section>
 
         {/* Call to Action Section */}
-        {!isAuthenticated &&  
         <section className="cta-section">
           <div className="cta-content">
             <h2>Ready to Get Started?</h2>
             <p>Join our platform today and take the next step in your career or business</p>
-         <button className="primary-btn" onClick={() => navigate('/register')}>
+         <button className="primary-btn" onClick={() => navigate('/signup')}>
               Create Account
             </button>
           </div>
         </section>
-}
+
         {/* FAQ Section */}
         <section className="faq-section">
           <h2>Frequently Asked Questions</h2>

@@ -9,8 +9,10 @@ import WhatsApp from "../../../Assets/Images/WhatsApp.svg"
 import writeus from "../../../Assets/Images/fi-rr-comment-alt.svg"
 import CommonSpinner from "../../../ComponentReuse/Loader/Spinner";
 import { serviceData } from "../../../Utils/products";
+import useWindowScrollToTop from "../../../CustomHook/useWindowScrollToTop";
 
 const CategoryList = () => {
+  useWindowScrollToTop()
   const [showForm, setShowForm] = useState(false);
   const [categoryType,setCategoryType]=useState({cat:"",subCat:""})
   const [query, setQuery] = useState("");
@@ -78,7 +80,7 @@ const CategoryList = () => {
                 <Col md={3} sm={6} xs={12} className="feature p-3 mb-3 text-center" key={index} style={{ backgroundColor: val.bg }}>
                   <div className="icon">{val.icon}</div>
                   <h5>{val.title}</h5>
-                  <button className="customButtonColor btn-sm mt-2" onClick={() => navigate(`/experts/${val.id}`)}>
+                  <button className="customButtonColor btn-sm mt-2" onClick={() => navigate(`/user/bookingdetails`)}>
                     {val.subtitle}
                   </button>
                 </Col>

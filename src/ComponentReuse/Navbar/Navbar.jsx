@@ -15,7 +15,6 @@ const NavBar = () => {
   // const role = useSelector((state) => state.user.role)
 const isLoggedIn=!!localStorage.getItem("isLoggedIn")
 const isAuthenticated= !!localStorage.getItem("isAuthenticated")
-
 const role=localStorage.getItem("role")
 
   const dispatch = useDispatch();
@@ -24,6 +23,7 @@ const role=localStorage.getItem("role")
   const handleLogout = async () => {
     try {
       const result = await dispatch(logoutUser()).unwrap();
+
       if(result){
         // CommonToast("success", "Logout successful!")
         navigate("/login");
@@ -47,7 +47,7 @@ const role=localStorage.getItem("role")
     <Navbar fixed="top" expand="md" className={`navbar ${isFixed ? "fixed" : ""}`}>
       <Container>
         {/* Logo */}
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to={`${isLoggedIn ?"/"+role:"/"}`}>
           <img src={logo} alt="Logo" className="logo" />
         </Navbar.Brand>
 
@@ -61,37 +61,30 @@ const role=localStorage.getItem("role")
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Item>
-              <Link className="nav-link" to="/" onClick={() => setExpand(false)}>Home</Link>
+              <Link className="nav-link" to={`${isLoggedIn ?"/"+role:"/"}`} onClick={() => setExpand(false)}>Home</Link>
             </Nav.Item>
-
-            {isLoggedIn && role == "user" && <>
+            {isLoggedIn && <>
+              <Nav.Item>
+             {role=="user" && <Link className="nav-link" to="/user/categories" onClick={() => setExpand(false)}>Categories</Link> } 
+              </Nav.Item>
               <Nav.Item>
                 <button
                   className="nav-link" onClick={(e) => {
                     e.preventDefault();
                     setExpand(false);
-                    navigate("/profile?tab=account");
+                    navigate(`/${role}/profile?tab=account`);
                   }}
                 >Account</button>
               </Nav.Item>
               <Nav.Item>
-                <Link className="nav-link" to="/profile?tab=myBooking" onClick={() => setExpand(false)}>Bookings</Link>
+                <Link className="nav-link" to={`/${role}/profile?tab=myBooking`} onClick={() => setExpand(false)}>Bookings</Link>
               </Nav.Item>
               <Nav.Item>
                 <NotificationIcon count={9} />
               </Nav.Item>
             </>}
-
-            {isLoggedIn && role === "admin" && (
-              <Nav.Item>
-                <Link className="nav-link" to="/admin" onClick={() => setExpand(false)}>Admin Panel</Link>
-              </Nav.Item>
-            )}
             <Nav.Item>
-              {console.log(isAuthenticated, isLoggedIn ,"kkkkkkkkkkkkkkkkkkkkk")}
-              {isLoggedIn && <Link className="nav-link" to="/login" onClick={handleLogout}>Logout</Link>}
-               { !isAuthenticated &&!isLoggedIn && <Link className="nav-link" to="/signup">Register</Link>}
-               { isAuthenticated && !isLoggedIn && <Link className="nav-link" to="/login">Login</Link>}
+              {isLoggedIn ?<Link className="nav-link" to="/login" onClick={handleLogout}>Logout</Link>: <Link className="nav-link" to="/login">Login</Link>}
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>

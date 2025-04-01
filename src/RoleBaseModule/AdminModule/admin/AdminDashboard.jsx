@@ -88,6 +88,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-layout">
+              <SidePanel />
             <div className="admin-content">
                 <div className="admin-dashboard">
                     <div className="dashboard-header">

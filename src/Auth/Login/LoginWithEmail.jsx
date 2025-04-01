@@ -21,7 +21,8 @@ useWindowScrollToTop()
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
     const location = useLocation();
-    const redirectPath = location.state?.path || "/";
+    const role=localStorage.getItem("role")
+    const redirectPath = location.state?.path || `/${role}`;
     const validateForm = () => {
         let newErrors = {};
 
@@ -55,13 +56,7 @@ useWindowScrollToTop()
             setFormData({ email: "", password: "" });
             setErrors({});
 
-               if (result.user.role === "user") {
-                    if(redirectPath){
-                      navigate(redirectPath)
-                    }else{
-                      navigate("/")
-                    }  
-               }
+               if (result.user.role === "user") navigate(redirectPath)
                if (result.user.role === "admin") navigate("/admin");
                if (result.user.role === "agent") navigate("/agent");
 

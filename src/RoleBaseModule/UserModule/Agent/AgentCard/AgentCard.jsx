@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import "./agentcard.css";
+import useWindowScrollToTop from "../../../../CustomHook/useWindowScrollToTop";
 
 const ProductCard = ({ productItem }) => {
+  useWindowScrollToTop()
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleClick = (id) => {
-    navigate(`/experts/${id}/agentlist`);
+    navigate(`/user/bookingdetails/agentdescription`);
   };
 
   return (

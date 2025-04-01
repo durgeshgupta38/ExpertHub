@@ -48,7 +48,7 @@ const TabBar = () => {
     }
   };
   const handleEditAccount=()=>{
-    navigate("/account/edit",{
+    navigate("/user/profile/edit",{
       state: { userData:user }, // Pass the user object or any data
     });
   }
@@ -60,13 +60,13 @@ const TabBar = () => {
         {/* Tabs Navigation */}
         <Nav variant="tabs" className="profile-tabs">
           <Nav.Item>
-            <Nav.Link eventKey="account" onClick={()=>navigate("/profile?tab=account")}>Account</Nav.Link>
+            <Nav.Link eventKey="account" onClick={()=>navigate("/user/profile?tab=account")}>Account</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="myBooking"onClick={()=>navigate("/profile?tab=myBooking")}>My Bookings</Nav.Link>
+            <Nav.Link eventKey="myBooking"onClick={()=>navigate("/user/profile?tab=myBooking")}>My Bookings</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="notification"  onClick={()=>navigate("/profile?tab=notification")}>Notifications</Nav.Link>
+            <Nav.Link eventKey="notification"  onClick={()=>navigate("/user/profile?tab=notification")}>Notifications</Nav.Link>
           </Nav.Item>
         </Nav>
 

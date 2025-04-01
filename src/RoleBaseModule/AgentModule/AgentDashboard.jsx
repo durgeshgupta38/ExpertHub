@@ -1,7 +1,10 @@
 import React from "react"
+import SliderHome from "../../ComponentReuse/SliderCard/Slider"
 const AgentDashboard=()=>{
     return(
-        <h1>AgentDashboard</h1>
+        <>
+      <SliderHome />
+        </>
     )
 }
 export default AgentDashboard

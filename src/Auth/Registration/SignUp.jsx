@@ -77,7 +77,7 @@ const SignUp = () => {
             setErrors({});
         } catch (error) {
             console.error("Signup Error:", error);
-            CommonToast("error", error || "Signup failed. Please try again.")
+            CommonToast("error",error=="User is alerady exist in our system."?"User is alerady exist.Please login." :error || "Signup failed. Please try again.")
         }
     };
 
@@ -90,8 +90,8 @@ const handleUserTypeChange = (val) => {
             <div className="signup-container">
                <h3 className="text-center mb-2">ExpertHub </h3>
                 <ToggleButtonGroup type="radio" name="userType" value={formData.role} className="w-100 mb-2" onChange={handleUserTypeChange}>
-                    <ToggleButton id="user" value="user" variant={formData.role === "user" ? "primary" : "outline-primary"}>Register as User</ToggleButton>
-                    <ToggleButton id="agent" value="agent" variant={formData.role === "agent" ? "primary" : "outline-primary"}> Register as Agent</ToggleButton>
+                    <ToggleButton id="user" value="user" variant={formData.role === "user" ? "primary" : "outline-primary"}>Sign up as User</ToggleButton>
+                    <ToggleButton id="agent" value="agent" variant={formData.role === "agent" ? "primary" : "outline-primary"}> Sign up as Agent</ToggleButton>
                 </ToggleButtonGroup>
                 
                 <form onSubmit={handleSubmit}>
