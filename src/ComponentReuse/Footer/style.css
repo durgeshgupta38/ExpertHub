@@ -11,6 +11,7 @@ html, body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  justify-content: space-between;
 }
 main {
   flex: 1;
@@ -23,7 +24,7 @@ footer {
   color: white;
   text-align: left;
   width: 100%;
-  margin-top: auto;
+  /* margin-top: auto; */
 }
 
 .footer-box {

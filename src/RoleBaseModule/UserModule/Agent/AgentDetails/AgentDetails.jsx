@@ -12,7 +12,7 @@ const AgentDetails = ({ selectedProduct }) => {
   const navigate = useNavigate();
 
   const handeBookNow = () => {
-    navigate(`/review`);
+    navigate(`/user/review`);
   };
 
   return (

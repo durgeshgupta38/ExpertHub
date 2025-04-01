@@ -55,7 +55,7 @@ const Login = () => {
                     )}
 
                     <p className="text-center mt-3 mb-1">Don't have an account? <Link to="/signup">Sign Up</Link></p>
-                    <p className="text-center">Forgot Password? <Link to="/forgetPassword">Forgot Password</Link></p>
+                    <p className="text-center">Forgot Password? <Link to="/forgotPassword">Forgot Password</Link></p>
 
                 </div>
             </div>

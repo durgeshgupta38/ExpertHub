@@ -1,120 +1,3 @@
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import React, { useEffect, useRef } from "react";
-
-// import { Suspense } from "react";
-// import { ToastContainer, Zoom } from "react-toastify";
-// import { Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
-// import NavBar from "./ComponentReuse/Navbar/Navbar";
-// import Breadcrumbs from "./ComponentReuse/Breadcrumb/Breadcum";
-// // import { AuthProvider } from "./ContextApi/AuthContext";
-// import Footer from "./ComponentReuse/Footer/Footer";
-// import routes from "./Routes/routesConfig";
-// import Loader from "./ComponentReuse/Loader/Loader";
-// import { useDispatch } from "react-redux";
-// import { logoutUser } from "./Redux/Slices/userSlice";
-// import { CommonToast } from "./ComponentReuse/Loader/commonToast";
-
-
-// function App() {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const logoutoutRef = useRef({
-//     isLoggedInStorage: localStorage.getItem("isLoggedIn"),
-//     roleStorage: localStorage.getItem("role"),
-//     accessTokenStorage: localStorage.getItem("accessToken"),
-//   });
-
-//    const resetTimer = async () => {
-//     const isLoggedIn = localStorage.getItem("isLoggedIn")
-//     const role = localStorage.getItem("role")
-//     const accessToken = localStorage.getItem("accessToken")
-
-//     if (logoutoutRef.current.isLoggedInStorage !== isLoggedIn || logoutoutRef.current.roleStorage !== role || logoutoutRef.current.accessTokenStorage !== accessToken) {
-//       // clearTimeout(timeoutRef.current); // Clear the existing timeout
-//       try {
-//         const result = await dispatch(logoutUser()).unwrap();// Unwraps the response
-//         CommonToast("error", "UnAuthorized attempt made")
-//         navigate("/login")
-//       } catch (error) {
-//         CommonToast("error", error || "Login failed. Please try again.")
-//       }
-//         logoutoutRef.current = {
-//         isLoggedInStorage: isLoggedIn,
-//         roleStorage: role,
-//         accessTokenStorage: accessToken,
-//       };
-//     }
-//   };
-
-//   useEffect(() => {
-//     // window.addEventListener("mousemove", resetTimer);
-//     window.addEventListener("keypress", resetTimer);
-//     window.addEventListener("click", resetTimer);
-//     // window.addEventListener("scroll", resetTimer);
-
-//     // Start the initial timer
-//     resetTimer();
-
-//     // Clean up event listeners and timeout on component unmount
-//     return () => {
-//       // clearTimeout(logoutoutRef.current);
-//       // window.removeEventListener("mousemove", resetTimer);
-//       window.removeEventListener("keypress", resetTimer);
-//       window.removeEventListener("click", resetTimer);
-//       // window.addEventListener("scroll", resetTimer);
-
-//     };
-//   }, []);
-//   // useAutoLogout();
-//   return (
-//     <>
-//       {/* <AuthProvider>
-//      <Router> */}
-//       <ToastContainer
-//         position="top-right"
-//         autoClose={1500}
-//         hideProgressBar={false}
-//         newestOnTop={false}
-//         closeOnClick={false}
-//         rtl={false}
-//         pauseOnFocusLoss
-//         draggable
-//         pauseOnHover
-//         theme="colored"
-//         transition={Zoom}
-//       />
-//       {/* <AutoLogoutOnLocalStorage/> */}
-//       {/* <AutoLogout/> */}
-
-//       <NavBar />
-//       <Breadcrumbs />
-
-//       <Suspense fallback={<Loader />}>
-
-//         <Routes>
-//           {routes.map(({ path, element, children }, index) => (
-//             <Route key={index} path={path} element={element}>
-//               {children &&
-//                 children.map((child, childIndex) => (
-//                   <Route
-//                     key={childIndex}
-//                     index={child.index}
-//                     path={child.path}
-//                     element={child.element}
-//                   />
-//                 ))}
-//             </Route>
-//           ))}
-//         </Routes>
-//       </Suspense>
-//       <Footer />
-//       {/* </Router>
-//      </AuthProvider> */}
-//     </>
-//   );
-// }
-
-// export default App
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useRef } from "react";
 import { Suspense } from "react";
@@ -129,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "./Redux/Slices/userSlice";
 import { CommonToast } from "./ComponentReuse/Loader/commonToast";
 import useWindowScrollToTop from "./CustomHook/useWindowScrollToTop";
-import SidePanel from "./RoleBaseModule/AdminModule/admin/SidePanel";
+// import SidePanel from "./RoleBaseModule/AdminModule/admin/SidePanel";
 
 function App() {
   useWindowScrollToTop()
@@ -138,7 +21,8 @@ function App() {
   const user = useSelector(state => state.user); // Get user state from Redux
   const accessToken = localStorage.getItem("accessToken");
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const role = "admin"
+  const role = localStorage.getItem("role");
+
   const logoutoutRef = useRef({
     isLoggedIn: localStorage.getItem("isLoggedIn"),
     role: localStorage.getItem("role"),
@@ -199,7 +83,6 @@ function App() {
 
   return (
     <>
-     {accessToken && role !== "admin" &&<>
       <ToastContainer
         position="top-right"
         autoClose={1500}
@@ -213,10 +96,12 @@ function App() {
         theme="colored"
         transition={Zoom}
       />
+      {role!=="admin" &&
+      <>
       <NavBar />
       <Breadcrumbs />
       </>}
-      {accessToken && role =="admin"&&  <SidePanel />}
+      
       <Suspense fallback={<Loader />}>
         <Routes>
           {routes.map(({ path, element, children }, index) => (
@@ -234,7 +119,8 @@ function App() {
           ))}
         </Routes>
       </Suspense>
-      {accessToken && role !== "admin" && <Footer />}
+      {role!=="admin" && <Footer />}
+      
     </>
   );
 }

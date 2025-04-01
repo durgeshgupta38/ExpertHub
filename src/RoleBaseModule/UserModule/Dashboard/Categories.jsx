@@ -2,9 +2,8 @@ import React from "react"
 import "./style.css"
 import { Container} from "react-bootstrap"
 import CategoryList from "./CategoryList"
-import HomePage from "./HomePage"
 
-const Wrapper = () => {
+const Categories = () => {
   return (
     <section className='wrapper background mt-4' >
       <Container>
@@ -17,4 +16,4 @@ const Wrapper = () => {
   )
 }
 
-export default Wrapper
+export default Categories

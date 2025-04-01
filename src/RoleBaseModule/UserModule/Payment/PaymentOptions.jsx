@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./payment.css";
+import useWindowScrollToTop from "../../../CustomHook/useWindowScrollToTop";
 
 const PaymentOptions = () => {
+  useWindowScrollToTop()
   const [selectedMethod, setSelectedMethod] = useState("Netbanking");
   const [selectedBank, setSelectedBank] = useState("");
   const [amount, setAmount] = useState(112575); // Example amount

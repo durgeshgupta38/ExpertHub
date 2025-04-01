@@ -158,12 +158,12 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
-        // state.isAuthenticated = false;
+        state.isAuthenticated = false;
         state.accessToken = null;
         state.isLoggedIn = false;
         state.role = null;
         localStorage.removeItem("accessToken");
-        // localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("role");
         state.loading = false;

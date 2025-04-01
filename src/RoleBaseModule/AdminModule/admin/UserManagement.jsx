@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CommonToast } from '../../../ComponentReuse/Loader/commonToast';
 import CommonSpinner from '../../../ComponentReuse/Loader/Spinner';
 import './UserManagement.css';
+import SidePanel from './SidePanel';
 
 const UserManagement = () => {
     const dispatch = useDispatch();
@@ -133,6 +134,7 @@ const UserManagement = () => {
 
     return (
         <div className="admin-layout">
+              <SidePanel />
         <div className="admin-content">
         <div className="user-management">
             <div className="page-header">

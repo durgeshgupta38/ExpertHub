@@ -8,7 +8,7 @@ const ReviewAndComplete=()=>{
       const navigate = useNavigate();
     
     const handleComplete=()=>{
-        navigate(`/experts/paymentoptions`);
+        navigate(`/user/paymentoptions`);
     }
     return(
         <div className="container d-flex justify-content-center mt-4 mb-4">

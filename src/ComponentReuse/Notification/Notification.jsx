@@ -6,7 +6,7 @@ const NotificationIcon = ({ count }) => {
     const navigate = useNavigate();
     return (
         <>
-            <button className="nav-link notification-container" onClick={() => navigate("/profile?tab=notification")}>
+            <button className="nav-link notification-container" onClick={() => navigate("/user/profile?tab=notification")}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -2 24 24"

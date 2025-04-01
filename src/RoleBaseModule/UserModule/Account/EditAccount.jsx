@@ -225,7 +225,7 @@ const EditAccount = () => {
       const response = await dispatch(changePassword({ oldPassword, newPassword })).unwrap();
       CommonToast("success", response.message + "" + "Please login again to continue");
       dispatch(logoutUser());
-      navigate("/login", { state: { path: "/account/edit" } });
+      navigate("/login", { state: { path: "/user/profile/edit" } });
       setPassword({ oldPassword: "", newPassword: "", confirmPassword: "" });
       setErrors(prev=>({...prev,oldPassword: "", newPassword: "", confirmPassword: ""}));
 
