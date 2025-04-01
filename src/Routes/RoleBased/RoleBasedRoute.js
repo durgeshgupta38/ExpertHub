@@ -2,10 +2,8 @@ import { useEffect, useRef } from "react";
 import { Navigate,Outlet } from "react-router-dom";
 import { CommonToast } from "../../ComponentReuse/Loader/commonToast";
 const RoleBasedRoute = ({ allowedRoles }) => {
-// let isLoggedIn=localStorage.getItem("isLoggedIn")
-// let role=localStorage.getItem("role");
-let role="admin"
-let isLoggedIn=true
+let isLoggedIn=localStorage.getItem("isLoggedIn")
+let role=localStorage.getItem("role");
 const toastShown = useRef(false);
   useEffect(() => {
     if (!isLoggedIn && !toastShown.current) {

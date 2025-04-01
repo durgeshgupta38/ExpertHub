@@ -25,8 +25,9 @@ const routes = [
   {
     path: "/",
     element: (() => {
-      const isLoggedIn = true;
-      const role = "admin" 
+
+      const isLoggedIn = localStorage.getItem("isLoggedIn")
+      const role = localStorage.getItem("role")
 
       if (isLoggedIn && role === "user") {
         return <Navigate to="/user" replace />;
@@ -50,8 +51,8 @@ const routes = [
     path: "/user",
     element: <RoleBasedRoute allowedRoles={["user", "admin"]} />,
     children: [
-      { index: true, element: <UserHome /> },
-      { path:"categories", element: <Categories /> },
+      { index: true, element: <Categories /> },
+      // { path:"categories", element: <Categories /> },
       { path: "bookingdetails", element: <AgentList/> },
       { path: "bookingdetails/agentdescription", element: <AgentDescriptionPage /> },
       { path: "profile", element: <TabBar /> },
